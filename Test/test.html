@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root"></div>
+    <div id="root2"></div>
+    <img src="" alt="" id="img1">
+    <img src="" alt="" id="img2">
+    <script>
+        const fetAPI = () => {
+            fetch('https://reqres.in/api/users?page=1')
+                .then(req => req.text())
+                .then(val => document.getElementById('root').innerHTML = `<br> ${val}<br>fetAPI1 => ${typeof val}`)
+                .catch(err => alert(err))
+
+        }
+
+        //fetAPI();
+
+        const fetAPI2 = async () => {
+            try {
+                let req = await fetch('https://reqres.in/api/users?page=1');
+                let res = await req.text();
+                document.getElementById('root').innerHTML = `<br> ${res}<br>fetAPI2 => ${typeof res}`
+            } catch (err) {
+                alert(err)
+            }
+        }
+
+        fetAPI2();
+
+        // const timer = () => {
+        //     document.getElementById('root2').innerHTML =
+        //         `<div>${new Date}</div>
+        //         <input/>
+        //         `;
+        // }
+
+        // setInterval(timer, 1000);
+        const httpGetAsync = (url, res, rej) => {
+            let req = new XMLHttpRequest();
+            req.open('GET', url);
+            req.onload = () => {
+                req.status == 200 ? res(req) : rej(alert('Error'));  /*&& req.readyState == 4*/
+            }
+            req.send();
+        }
+        const promise1 = new Promise((res, rej) => {
+            httpGetAsync("https://picsum.photos/200", res, rej);
+        });
+        const promise2 = new Promise((res, rej) => {
+            httpGetAsync("https://picsum.photos/200", res, rej);
+        });
+
+        // promise1
+        //     .then(e => {
+        //         document.getElementById('img1').setAttribute('src', e.responseURL);
+        //         return promise2;
+        //     })
+        //     .then(e => document.getElementById('img2').setAttribute('src', e.responseURL))
+
+        (async () => {
+            const result1 = await promise1;
+            document.getElementById('img1').setAttribute('src', result1.responseURL);
+            const result2 = await promise2;
+            document.getElementById('img2').setAttribute('src', result2.responseURL)
+            // console.log(result)
+        })();
+
+
+    </script>
+</body>
+
+</html>

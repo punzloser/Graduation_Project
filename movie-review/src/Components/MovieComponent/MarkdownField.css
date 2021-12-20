@@ -1,0 +1,14 @@
+.biography, .demo{
+    width: 500px;
+    height: 200px;
+    padding: 0.375rem 0.75rem;
+    border-radius: 10px;
+}
+.demo{
+    border: 1px dashed green;
+    margin-left: 15px;
+}
+
+.biography {
+    border: 1px dashed green;
+}

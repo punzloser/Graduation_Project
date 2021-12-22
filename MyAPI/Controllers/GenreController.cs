@@ -19,15 +19,16 @@ namespace MyAPI.Controllers
         }
 
         [HttpGet]
-        public List<Genre> Get()
+        public async Task<List<Genre>> Get()
         {
-            return _repo.GetListGenres();
+            return await _repo.GetListGenres();
         }
 
+
         [HttpGet("{Id}")]
-        public ActionResult<Genre> GetById(int Id)
+        public async Task<ActionResult<Genre>> GetById(int Id)
         {
-            var genre = _repo.GetById(Id);
+            var genre = await _repo.GetById(Id);
             if (genre == null)
             {
                 return NotFound();

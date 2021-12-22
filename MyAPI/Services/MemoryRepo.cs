@@ -18,14 +18,17 @@ namespace MyAPI.Services
             };
         }
 
-        public List<Genre> GetListGenres()
+        public async Task<List<Genre>> GetListGenres()
         {
+            await Task.Delay(1000);
             return _genres;
         }
 
-        public Genre GetById(int Id)
+        public async Task<Genre> GetById(int Id)
         {
+            await Task.Delay(1);
             return _genres.Find(a => a.Id == Id);
         }
+
     }
 }

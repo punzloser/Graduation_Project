@@ -22,5 +22,10 @@ namespace MyAPI.Services
         {
             return _genres;
         }
+
+        public Genre GetById(int Id)
+        {
+            return _genres.Find(a => a.Id == Id);
+        }
     }
 }

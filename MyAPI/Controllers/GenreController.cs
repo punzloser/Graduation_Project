@@ -25,12 +25,12 @@ namespace MyAPI.Controllers
         }
 
         [HttpGet("{Id}")]
-        public Genre GetById(int Id)
+        public ActionResult<Genre> GetById(int Id)
         {
             var genre = _repo.GetById(Id);
             if (genre == null)
             {
-                //return NotFound();
+                return NotFound();
             }
             return genre;
         }

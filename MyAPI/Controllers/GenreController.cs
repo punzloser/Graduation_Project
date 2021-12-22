@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MyAPI.Controllers
 {
-    [Route("api/genre")]
+    [Route("api/the-loai")]
     public class GenreController : ControllerBase
     {
         private readonly IRepo _repo;
@@ -24,7 +24,7 @@ namespace MyAPI.Controllers
             return _repo.GetListGenres();
         }
 
-        [HttpGet]
+        [HttpGet("{Id}")]
         public Genre GetById(int Id)
         {
             var genre = _repo.GetById(Id);

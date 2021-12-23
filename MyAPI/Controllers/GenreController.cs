@@ -45,6 +45,7 @@ namespace MyAPI.Controllers
         [HttpPost]
         public ActionResult Post([FromBody] Genre g)
         {
+            _repo.AddGenre(g);
             return NoContent();
         }
 

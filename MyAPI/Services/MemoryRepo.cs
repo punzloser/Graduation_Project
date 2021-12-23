@@ -20,7 +20,7 @@ namespace MyAPI.Services
 
         public async Task<List<Genre>> GetListGenres()
         {
-            await Task.Delay(1000);
+            await Task.Delay(100);
             return _genres;
         }
 
@@ -28,6 +28,12 @@ namespace MyAPI.Services
         {
             await Task.Delay(1);
             return _genres.Find(a => a.Id == Id);
+        }
+
+        public void AddGenre(Genre g)
+        {
+            g.Id = _genres.Max(a => a.Id) + 1;
+            _genres.Add(g);
         }
 
     }

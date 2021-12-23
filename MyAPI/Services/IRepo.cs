@@ -8,6 +8,7 @@ namespace MyAPI.Services
 {
     public interface IRepo
     {
+        void AddGenre(Genre g);
         Task<Genre> GetById(int Id);
         Task<List<Genre>> GetListGenres();
     }

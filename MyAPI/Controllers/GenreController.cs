@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MyAPI.Entities;
 using MyAPI.Services;
 using System;
@@ -28,12 +29,34 @@ namespace MyAPI.Controllers
         [HttpGet("{Id}")]
         public async Task<ActionResult<Genre>> GetById(int Id)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var genre = await _repo.GetById(Id);
             if (genre == null)
             {
                 return NotFound();
             }
             return genre;
+        }
+
+        [HttpPost]
+        public ActionResult Post([FromBody] Genre g)
+        {
+            return NoContent();
+        }
+
+        [HttpPut]
+        public ActionResult Put([FromForm] Genre g)
+        {
+            return NoContent();
+        }
+
+        [HttpDelete]
+        public ActionResult Del(Genre g)
+        {
+            return NoContent();
         }
     }
 }

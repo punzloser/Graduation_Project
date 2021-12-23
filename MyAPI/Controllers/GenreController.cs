@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace MyAPI.Controllers
 {
     [Route("api/the-loai")]
+    [ApiController]
     public class GenreController : ControllerBase
     {
         private readonly IRepo _repo;

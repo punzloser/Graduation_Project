@@ -29,10 +29,21 @@ namespace MyAPI
         {
 
             services.AddControllers();
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MyAPI", Version = "v1" });
+            });
+
+            services.AddCors(opt =>
+            {
+                var reactUrl = Configuration.GetValue<string>("ReactUrl");
+                opt.AddDefaultPolicy(builder =>
+                {
+                    builder.WithOrigins(reactUrl).AllowAnyMethod().AllowAnyHeader();
+                });
             });
         }
 
@@ -49,6 +60,8 @@ namespace MyAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthentication();
 

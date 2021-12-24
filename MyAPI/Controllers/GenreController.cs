@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using MyAPI.Entities;
-using MyAPI.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,52 +12,44 @@ namespace MyAPI.Controllers
     [ApiController]
     public class GenreController : ControllerBase
     {
-        private readonly IRepo _repo;
 
-        public GenreController(IRepo repo)
+        public GenreController()
         {
-            _repo = repo;
+
         }
 
         [HttpGet]
-        public async Task<List<Genre>> Get()
+        public async Task<ActionResult<List<Genre>>> Get()
         {
-            return await _repo.GetListGenres();
+            return new List<Genre>()
+            {
+                new Genre(){Id = 1, Name = "Comedy"}
+            };
         }
 
 
         [HttpGet("{Id}")]
         public async Task<ActionResult<Genre>> GetById(int Id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var genre = await _repo.GetById(Id);
-            if (genre == null)
-            {
-                return NotFound();
-            }
-            return genre;
+            throw new NotImplementedException();
         }
 
         [HttpPost]
         public ActionResult Post([FromBody] Genre g)
         {
-            _repo.AddGenre(g);
-            return NoContent();
+            throw new NotImplementedException();
         }
 
         [HttpPut]
         public ActionResult Put([FromForm] Genre g)
         {
-            return NoContent();
+            throw new NotImplementedException();
         }
 
         [HttpDelete]
         public ActionResult Del(Genre g)
         {
-            return NoContent();
+            throw new NotImplementedException();
         }
     }
 }

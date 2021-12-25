@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.EntityFrameworkCore;
 using MyAPI.Entities;
 using System;
 using System.Collections.Generic;
@@ -12,44 +13,68 @@ namespace MyAPI.Controllers
     [ApiController]
     public class GenreController : ControllerBase
     {
+        private readonly MyDbContext _db;
 
-        public GenreController()
+        public GenreController(MyDbContext db)
         {
-
+            _db = db;
         }
 
         [HttpGet]
         public async Task<ActionResult<List<Genre>>> Get()
         {
-            return new List<Genre>()
-            {
-                new Genre(){Id = 1, Name = "Comedy"}
-            };
+            return await _db.Genres.ToListAsync();
         }
 
 
         [HttpGet("{Id}")]
         public async Task<ActionResult<Genre>> GetById(int Id)
         {
-            throw new NotImplementedException();
+            var result = await _db.Genres.FindAsync(Id);
+
+            if (result != null)
+                return Ok(result);
+            return NotFound();
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] Genre g)
+        public async Task<ActionResult> Post([FromBody] Genre g)
         {
-            throw new NotImplementedException();
+            _db.Add(g);
+            await _db.SaveChangesAsync();
+            return Ok();
         }
 
         [HttpPut]
-        public ActionResult Put([FromForm] Genre g)
+        public async Task<ActionResult> Put([FromBody] Genre g)
         {
-            throw new NotImplementedException();
+            var result = await _db.Genres.FindAsync(g.Id);
+            if (result != null)
+            {
+                result.Name = g.Name;
+                await _db.SaveChangesAsync();
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         [HttpDelete]
-        public ActionResult Del(Genre g)
+        public async Task<ActionResult> Del(int id)
         {
-            throw new NotImplementedException();
+            var del = await _db.Genres.FindAsync(id);
+            if (del != null)
+            {
+                _db.Remove(del);
+                await _db.SaveChangesAsync();
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
         }
     }
 }

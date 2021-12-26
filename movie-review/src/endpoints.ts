@@ -1,2 +1,2 @@
-const baseUrl = process.env.API_URL;
+const baseUrl = process.env.REACT_APP_API;
 export const genreUrl = `${baseUrl}/the-loai`;

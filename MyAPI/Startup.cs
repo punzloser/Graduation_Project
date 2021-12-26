@@ -13,6 +13,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using MyAPI.APIBehavior;
+using MyAPI.Filters;
 
 namespace MyAPI
 {
@@ -29,7 +31,10 @@ namespace MyAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers(opt =>
+            {
+                opt.Filters.Add(typeof(ParseBadRequest));
+            }).ConfigureApiBehaviorOptions(BadRequestBehavior.Parse);
 
             services.AddDbContext<MyDbContext>(opt =>
             {

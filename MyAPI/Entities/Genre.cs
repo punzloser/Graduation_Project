@@ -11,6 +11,7 @@ namespace MyAPI.Entities
     {
         public int Id { get; set; }
 
+        [StringLength(maximumLength: 30, ErrorMessage = "Tối đa 30 kí tự")]
         [GenreAttribute]
         public string Name { get; set; }
     }

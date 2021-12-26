@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
+using MyAPI.DTOs;
 using MyAPI.Entities;
 using System;
 using System.Collections.Generic;
@@ -21,9 +22,15 @@ namespace MyAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Genre>>> Get()
+        public async Task<ActionResult<List<GenreDTO>>> Get()
         {
-            return await _db.Genres.ToListAsync();
+            return await (from g in _db.Genres
+                          select new GenreDTO()
+                          {
+                              Id = g.Id,
+                              Name = g.Name
+                          }).ToListAsync();
+
         }
 
 

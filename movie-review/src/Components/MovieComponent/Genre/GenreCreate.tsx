@@ -1,7 +1,22 @@
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+import { genreUrl } from "../../../endpoints";
 import { defaultGenre } from "./defaultGenre";
 import { GenreForm } from "./GenreForm";
+import { IGenre } from './IGenre'
 
 export const GenreCreate = () => {
+
+    const history = useHistory();
+
+    const create = async (genre: IGenre) => {
+        try {
+            await axios.post(genreUrl, genre);
+            history.push('/the-loai')
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <div className="container-fluid">
@@ -9,8 +24,7 @@ export const GenreCreate = () => {
             <GenreForm
                 initValue={defaultGenre}
                 onSubmit={async e => {
-                    await new Promise(res => setTimeout(res, 1000));
-                    console.log(e)
+                    await create(e);
                 }}
             />
 

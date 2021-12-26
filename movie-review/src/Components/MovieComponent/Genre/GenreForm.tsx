@@ -16,7 +16,10 @@ export const GenreForm = (props: IGenreForm) => {
             onSubmit={props.onSubmit}
 
             validationSchema={Yup.object({
-                name: Yup.string().required('Nhập thể loại').firstLetterUppercase()
+                name: Yup.string()
+                    .required('Nhập thể loại')
+                    .firstLetterUppercase()
+                    .max(30, 'Tối đa 30 kí tự')
             })}
         >
             {formProps => (

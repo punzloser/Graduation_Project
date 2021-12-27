@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using MyAPI.DTOs;
 using MyAPI.Entities;
+using MyAPI.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,9 +26,13 @@ namespace MyAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<GenreDTO>>> Get()
+        public async Task<ActionResult<List<GenreDTO>>> Get([FromQuery] PaginationDTO pagination)
         {
-            var result = await _db.Genres.ToListAsync();
+            var queryable = _db.Genres.AsQueryable();
+            await HttpContext.InsertParametesPaginationInHeader(queryable);
+            var result = await queryable.OrderBy(a => a.Name)
+                .Paginate(pagination)
+                .ToListAsync();
 
             return _mapper.Map<List<GenreDTO>>(result);
 

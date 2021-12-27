@@ -55,7 +55,8 @@ namespace MyAPI
                 var reactUrl = Configuration.GetValue<string>("ReactUrl");
                 opt.AddDefaultPolicy(builder =>
                 {
-                    builder.WithOrigins(reactUrl).AllowAnyMethod().AllowAnyHeader();
+                    builder.WithOrigins(reactUrl).AllowAnyMethod().AllowAnyHeader()
+                    .WithExposedHeaders("totalOfRecords");
                 });
             });
         }

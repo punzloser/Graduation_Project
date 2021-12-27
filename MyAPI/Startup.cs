@@ -15,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MyAPI.APIBehavior;
 using MyAPI.Filters;
+using MyAPI.Helpers;
 
 namespace MyAPI
 {
@@ -30,6 +31,7 @@ namespace MyAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
             services.AddControllers(opt =>
             {

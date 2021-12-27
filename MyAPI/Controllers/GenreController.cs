@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using MyAPI.DTOs;
@@ -15,21 +16,20 @@ namespace MyAPI.Controllers
     public class GenreController : ControllerBase
     {
         private readonly MyDbContext _db;
+        private readonly IMapper _mapper;
 
-        public GenreController(MyDbContext db)
+        public GenreController(MyDbContext db, IMapper mapper)
         {
             _db = db;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<ActionResult<List<GenreDTO>>> Get()
         {
-            return await (from g in _db.Genres
-                          select new GenreDTO()
-                          {
-                              Id = g.Id,
-                              Name = g.Name
-                          }).ToListAsync();
+            var result = await _db.Genres.ToListAsync();
+
+            return _mapper.Map<List<GenreDTO>>(result);
 
         }
 
@@ -45,9 +45,11 @@ namespace MyAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] Genre g)
+        public async Task<ActionResult> Post([FromBody] GenreCreationDTO genreCreation)
         {
-            _db.Add(g);
+            var result = _mapper.Map<Genre>(genreCreation);
+
+            _db.Add(result);
             await _db.SaveChangesAsync();
             return Ok();
         }

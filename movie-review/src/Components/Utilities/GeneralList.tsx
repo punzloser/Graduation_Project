@@ -1,12 +1,12 @@
 import { Loading } from "./Loading";
 
-interface IGeneralP {
+interface IGeneralList {
     _list: any,
     displayUI?: React.ReactElement,
     children: React.ReactElement
 }
 
-export const GeneralPosterList = (props: IGeneralP) => {
+export const GeneralList = (props: IGeneralList) => {
     if (!props._list) {
         if (props.displayUI)
             return props.displayUI

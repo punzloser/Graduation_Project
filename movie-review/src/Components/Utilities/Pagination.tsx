@@ -21,10 +21,10 @@ export const Pagination = (props: IPagination) => {
     }
     const getClass = (link: linkModel) => {
         if (link.active) {
-            return 'active-pointer';
+            return 'active pointer';
         }
         if (!link.enabled) {
-            return 'disable';
+            return 'disabled';
         }
         return 'pointer';
     }
@@ -38,13 +38,13 @@ export const Pagination = (props: IPagination) => {
             active: false,
             enabled: previousPageEnabled,
             page: previousPage,
-            text: 'Previous'
+            text: 'Trước'
         });
 
         for (let i = 1; i < props.totalOfPages; i++) {
             if (i >= props.currentPage - props.radio && i <= props.currentPage + props.radio) {
                 links.push({
-                    active: props.currentPage === 1,
+                    active: props.currentPage === i,
                     enabled: true,
                     page: i,
                     text: `${i}`
@@ -59,7 +59,7 @@ export const Pagination = (props: IPagination) => {
             active: false,
             enabled: nextPageEnabled,
             page: nextPage,
-            text: 'Next'
+            text: 'Sau'
         });
 
         setLinkModels(links);
@@ -78,6 +78,10 @@ export const Pagination = (props: IPagination) => {
             </ul>
         </nav>
     );
+}
+
+Pagination.defaultProps = {
+    radio: 3
 }
 
 interface linkModel {

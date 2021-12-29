@@ -34,18 +34,18 @@ namespace MyAPI.Controllers
                 .Paginate(pagination)
                 .ToListAsync();
 
-            return _mapper.Map<List<GenreDTO>>(result);
+            return Ok(_mapper.Map<List<GenreDTO>>(result));
 
         }
 
 
-        [HttpGet("{Id}")]
-        public async Task<ActionResult<Genre>> GetById(int Id)
+        [HttpGet("{Id:int}")]
+        public async Task<ActionResult<GenreDTO>> GetById(int Id)
         {
             var result = await _db.Genres.FindAsync(Id);
 
             if (result != null)
-                return Ok(result);
+                return Ok(_mapper.Map<GenreDTO>(result));
             return NotFound();
         }
 
@@ -59,13 +59,13 @@ namespace MyAPI.Controllers
             return Ok();
         }
 
-        [HttpPut]
-        public async Task<ActionResult> Put([FromBody] Genre g)
+        [HttpPut("{Id:int}")]
+        public async Task<ActionResult> Put(int Id, [FromBody] GenreCreationDTO genreCreation)
         {
-            var result = await _db.Genres.FindAsync(g.Id);
+            var result = await _db.Genres.FindAsync(Id);
             if (result != null)
             {
-                result.Name = g.Name;
+                _mapper.Map(genreCreation, result);
                 await _db.SaveChangesAsync();
                 return Ok();
             }

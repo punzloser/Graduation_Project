@@ -11,7 +11,7 @@ export const Pagination = (props: IPagination) => {
 
     const [linkModels, setLinkModels] = useState<linkModel[]>([]);
     const selectPage = (link: linkModel) => {
-        if (link.page == props.currentPage) {
+        if (link.page === props.currentPage) {
             return;
         }
         if (!link.enabled) {

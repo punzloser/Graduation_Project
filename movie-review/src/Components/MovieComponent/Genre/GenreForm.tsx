@@ -25,8 +25,11 @@ export const GenreForm = (props: IGenreForm) => {
             {formProps => (
                 <Form>
                     <TextField field="name" displayName="Thể loại" />
-                    <Btn disabled={formProps.isSubmitting} type="submit">Lưu lại</Btn>
-                    <Link className="btn btn-md btn-warning" to="/the-loai">Hủy</Link>
+
+                    <div className="form-group mt-3">
+                        <Btn disabled={formProps.isSubmitting} type="submit">Lưu lại</Btn>
+                        <Link className="btn btn-md btn-warning ms-3" to="/the-loai">Hủy</Link>
+                    </div>
                 </Form>
             )}
         </Formik>

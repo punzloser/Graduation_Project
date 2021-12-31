@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace MyAPI.Validations
 {
-    public class GenreAttribute : ValidationAttribute
+    public class GeneralAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             if (value == null || string.IsNullOrEmpty(value.ToString()))
             {
-                return new ValidationResult("Nhập thể loại.");
+                return new ValidationResult("Nhập trường còn trống");
             }
             var firstLetter = value.ToString()[0].ToString();
 

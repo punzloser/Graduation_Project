@@ -7,10 +7,17 @@ using System.Threading.Tasks;
 
 namespace MyAPI.DTOs
 {
-    public class GenreCreationDTO
+    public class ActorCreationDTO
     {
-        [StringLength(maximumLength: 30, ErrorMessage = "Tối đa 30 kí tự")]
+
+        [StringLength(maximumLength: 50, ErrorMessage = "Tối đa 50 kí tự")]
         [GeneralAttribute]
         public string Name { get; set; }
+
+        public DateTime Dob { get; set; }
+
+        public string Biography { get; set; }
+
+        //public string Picture { get; set; }
     }
 }

@@ -15,6 +15,11 @@ namespace MyAPI.Helpers
             CreateMap<GenreDTO, Genre>().ReverseMap();
 
             CreateMap<GenreCreationDTO, Genre>();
+
+            CreateMap<ActorDTO, Actor>().ReverseMap();
+
+            CreateMap<ActorCreationDTO, Actor>()
+                .ForMember(des => des.Picture, opt => opt.Ignore());
         }
     }
 }

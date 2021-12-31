@@ -7,12 +7,18 @@ using System.Threading.Tasks;
 
 namespace MyAPI.Entities
 {
-    public class Genre
+    public class Actor
     {
         public int Id { get; set; }
 
-        [StringLength(maximumLength: 30, ErrorMessage = "Tối đa 30 kí tự")]
+        [StringLength(maximumLength: 50, ErrorMessage = "Tối đa 50 kí tự")]
         [GeneralAttribute]
         public string Name { get; set; }
+
+        public DateTime Dob { get; set; }
+
+        public string Biography { get; set; }
+
+        public string Picture { get; set; }
     }
 }

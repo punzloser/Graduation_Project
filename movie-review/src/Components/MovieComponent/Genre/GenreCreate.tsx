@@ -5,19 +5,19 @@ import { genreUrl } from "../../../endpoints";
 import { DisplayErrors } from "../../Utilities/DisplayErrors";
 import { defaultGenre } from "./defaultGenre";
 import { GenreForm } from "./GenreForm";
-import { IGenre } from './IGenre'
+import { genreCreationDTO } from './IGenre'
 
 export const GenreCreate = () => {
 
     const [errs, setErrs] = useState<string[]>([]);
     const history = useHistory();
 
-    const create = async (genre: IGenre) => {
+    const create = async (genre: genreCreationDTO) => {
         try {
             await axios.post(genreUrl, genre);
             history.push('/the-loai')
         } catch (error: any) {
-            if (error || error.response) {
+            if (error && error.response) {
                 setErrs(error.response.data);
             }
         }

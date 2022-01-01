@@ -44,17 +44,18 @@ namespace MyAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] ActorCreationDTO actorCreation)
+        public async Task<ActionResult> Post([FromForm] ActorCreationDTO actorCreation)
         {
-            var result = _mapper.Map<Actor>(actorCreation);
+            //var result = _mapper.Map<Actor>(actorCreation);
 
-            _db.Add(result);
-            await _db.SaveChangesAsync();
-            return Ok();
+            //_db.Add(result);
+            //await _db.SaveChangesAsync();
+            //return Ok();
+            throw new NotImplementedException();
         }
 
         [HttpPut("{Id:int}")]
-        public async Task<ActionResult> Put(int Id, [FromBody] ActorCreationDTO actorCreation)
+        public async Task<ActionResult> Put(int Id, [FromForm] ActorCreationDTO actorCreation)
         {
             var result = await _db.Actors.FindAsync(Id);
             if (result != null)

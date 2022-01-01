@@ -12,7 +12,7 @@ import { useState } from "react";
 import { genreDTO } from "../Genre/IGenre";
 import { movieTheaterDTO } from "../MovieTheater/IMovieTheater";
 import { TypeAheadActor } from "../TypeAheadActor";
-import { actorDTO } from "../Actor/IActor";
+import { actorMovieDTO } from "../Actor/IActor";
 
 interface IMovieForm {
     model: IMovie,
@@ -21,7 +21,7 @@ interface IMovieForm {
     nonSelectedGenres: genreDTO[],
     selectedMovieTheaters: movieTheaterDTO[],
     nonSelectedMovieTheaters: movieTheaterDTO[],
-    selectedActors: actorDTO[]
+    selectedActors: actorMovieDTO[]
 }
 
 export const MovieForm = (props: IMovieForm) => {
@@ -83,14 +83,14 @@ export const MovieForm = (props: IMovieForm) => {
                     <TypeAheadActor
                         displayName="Diễn viên"
                         actors={selectedActors}
-                        onAdd={(actors: actorDTO[]) => {
+                        onAdd={(actors: actorMovieDTO[]) => {
                             setSelectedActors(actors);
                         }}
-                        onDel={(actor: actorDTO) => {
+                        onDel={(actor: actorMovieDTO) => {
                             const actors = selectedActors.filter(a => a !== actor);
                             setSelectedActors(actors);
                         }}
-                        listUI={(actor: actorDTO) => (
+                        listUI={(actor: actorMovieDTO) => (
                             <div>
                                 {actor.name}
                                 <input

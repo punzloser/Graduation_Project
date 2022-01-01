@@ -1,6 +1,6 @@
-import { IActor } from "./IActor";
+import { actorCreationDTO } from "./IActor";
 
-export const defaultActor: IActor = {
+export const defaultActor: actorCreationDTO = {
     name: '',
-    dateOfBirth: undefined
+    dob: undefined
 }

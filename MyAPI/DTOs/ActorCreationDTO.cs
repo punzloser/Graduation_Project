@@ -1,4 +1,5 @@
-﻿using MyAPI.Validations;
+﻿using Microsoft.AspNetCore.Http;
+using MyAPI.Validations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -18,6 +19,6 @@ namespace MyAPI.DTOs
 
         public string Biography { get; set; }
 
-        //public string Picture { get; set; }
+        public IFormFile Picture { get; set; }
     }
 }

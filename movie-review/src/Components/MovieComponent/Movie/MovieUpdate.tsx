@@ -1,4 +1,4 @@
-import { actorDTO } from "../Actor/IActor";
+import { actorMovieDTO } from "../Actor/IActor";
 import { genreDTO } from "../Genre/IGenre";
 import { movieTheaterDTO } from "../MovieTheater/IMovieTheater";
 import IMovie from "./IMovie";
@@ -9,7 +9,7 @@ export const MovieUpdate = () => {
     const selectedGenres: genreDTO[] = [{ id: 1, name: 'Drama' }];
     const nonSelectedMovieTheaters: movieTheaterDTO[] = [{ id: 2, name: 'CGV Bình Dương' }];
     const selectedMovieTheaters: movieTheaterDTO[] = [{ id: 1, name: 'CGV Biên Hòa' }];
-    const selectedActors: actorDTO[] = [{ id: 2, name: 'Triệu Vy', character: 'Yêu quái', picture: 'https://i1.sndcdn.com/artworks-000248908839-wlug27-t500x500.jpg' }]
+    const selectedActors: actorMovieDTO[] = [{ id: 2, name: 'Triệu Vy', character: 'Yêu quái', picture: 'https://i1.sndcdn.com/artworks-000248908839-wlug27-t500x500.jpg' }]
     return (
         <div className="container-fluid">
             <h3 className="text-muted">Sửa đổi</h3>

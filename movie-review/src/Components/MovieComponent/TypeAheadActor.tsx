@@ -1,20 +1,20 @@
 import { Typeahead } from "react-bootstrap-typeahead";
-import { actorDTO } from "./Actor/IActor";
+import { actorMovieDTO } from "./Actor/IActor";
 
 interface ITypeAheadActor {
     displayName: string,
-    actors: actorDTO[],
-    onAdd(actors: actorDTO[]): void,
-    onDel(actor: actorDTO): void,
-    listUI(actor: actorDTO): React.ReactElement
+    actors: actorMovieDTO[],
+    onAdd(actors: actorMovieDTO[]): void,
+    onDel(actor: actorMovieDTO): void,
+    listUI(actor: actorMovieDTO): React.ReactElement
 }
 export const TypeAheadActor = (props: ITypeAheadActor) => {
-    const actors: actorDTO[] = [
+    const actors: actorMovieDTO[] = [
         { id: 1, name: 'Nguyễn Thanh', character: '', picture: 'https://1.bigdata-vn.com/wp-content/uploads/2021/10/Ngam-Bo-Hinh-Anh-Anime-Dep-Va-Sieu-De-Thuong.jpg' },
         { id: 2, name: 'Triệu Vy', character: '', picture: 'https://i1.sndcdn.com/artworks-000248908839-wlug27-t500x500.jpg' }
     ]
 
-    const selected: actorDTO[] = [];
+    const selected: actorMovieDTO[] = [];
     return (
         <>
             <label>{props.displayName}</label>

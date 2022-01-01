@@ -6,7 +6,7 @@ interface IDateField {
 }
 
 export const DateField = (props: IDateField) => {
-    const { values } = useFormikContext<any>();
+    const { values, validateForm } = useFormikContext<any>();
     return (
         <div className="mb-3">
             <label htmlFor={props.field}>{props.displayName}</label>
@@ -16,6 +16,7 @@ export const DateField = (props: IDateField) => {
                 onChange={e => {
                     const date = new Date(e.currentTarget.value);
                     values[props.field] = date;
+                    validateForm();
                 }}
             />
             <ErrorMessage name={props.field}>

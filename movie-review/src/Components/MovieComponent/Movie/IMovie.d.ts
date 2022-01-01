@@ -1,4 +1,4 @@
-import { actorDTO } from "../Actor/IActor";
+import { actorMovieDTO } from "../Actor/actorCreationDTO";
 
 export default interface IMovie {
     title: string,
@@ -9,5 +9,5 @@ export default interface IMovie {
     posterUrl?: string,
     genreIds?: number[]
     movieTheaterIds?: number[],
-    actors?: actorDTO[]
+    actors?: actorMovieDTO[]
 }

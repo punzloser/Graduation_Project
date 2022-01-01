@@ -3,14 +3,14 @@ import { Link } from "react-router-dom";
 import { Btn } from "../../Utilities/Btn";
 import * as Yup from "yup"
 import { TextField } from "../TextField";
-import { IGenre } from "./IGenre";
+import { genreCreationDTO } from "./IGenre";
 
-interface IGenreForm {
-    initValue: IGenre,
-    onSubmit(values: IGenre, action: FormikHelpers<IGenre>): void
+interface genreCreationDTOForm {
+    initValue: genreCreationDTO,
+    onSubmit(values: genreCreationDTO, action: FormikHelpers<genreCreationDTO>): void
 }
 
-export const GenreForm = (props: IGenreForm) => {
+export const GenreForm = (props: genreCreationDTOForm) => {
     return (
         <Formik initialValues={props.initValue}
             onSubmit={props.onSubmit}

@@ -44,7 +44,7 @@ export default function Index<T>(props: IIndex<T>) {
             indexLoading();
 
         } catch (error: any) {
-            if (error || error.response) {
+            if (error && error.response) {
                 console.log(error.response.data)
             }
         }

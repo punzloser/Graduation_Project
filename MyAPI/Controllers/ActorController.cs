@@ -29,12 +29,16 @@ namespace MyAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<ActorDTO>>> Get()
+        public async Task<ActionResult<List<ActorDTO>>> Get([FromQuery] PaginationDTO paginationDTO)
         {
-            var result = await _db.Actors.ToListAsync();
-            _mapper.Map<List<ActorDTO>>(result);
+            var queryable = _db.Actors.AsQueryable();
+            await HttpContext.InsertParametesPaginationInHeader(queryable);
 
-            return Ok(result);
+            var result = await queryable.OrderBy(a => a.Name)
+                .Paginate(paginationDTO)
+                .ToListAsync();
+
+            return Ok(_mapper.Map<List<ActorDTO>>(result));
         }
 
         [HttpGet("{Id:int}")]

@@ -2,14 +2,13 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MyAPI.Constants;
 using MyAPI.DTOs;
 using MyAPI.Entities;
 using MyAPI.Helpers;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static MyAPI.Constants.SystemConstants;
 
 namespace MyAPI.Controllers
 {
@@ -59,7 +58,7 @@ namespace MyAPI.Controllers
             if (actorCreation.Picture != null)
             {
                 result.Picture =
-                    await _fileStorageService.SaveFile(SystemConstants.ContainerName.actors, actorCreation.Picture);
+                    await _fileStorageService.SaveFile(ContainerName.actors, actorCreation.Picture);
             }
             _db.Add(result);
             await _db.SaveChangesAsync();
@@ -72,6 +71,11 @@ namespace MyAPI.Controllers
             var result = await _db.Actors.FindAsync(Id);
             if (result != null)
             {
+                if (actorCreation.Picture != null)
+                {
+                    result.Picture =
+                        await _fileStorageService.EditFile(ContainerName.actors, actorCreation.Picture, result.Picture);
+                }
                 _mapper.Map(actorCreation, result);
                 await _db.SaveChangesAsync();
                 return Ok();
@@ -89,8 +93,13 @@ namespace MyAPI.Controllers
             var del = await _db.Actors.FindAsync(Id);
             if (del != null)
             {
+                if (del.Picture != null)
+                {
+                    await _fileStorageService.DelFile(ContainerName.actors, del.Picture);
+                }
                 _db.Remove(del);
                 await _db.SaveChangesAsync();
+
                 return Ok();
             }
             else

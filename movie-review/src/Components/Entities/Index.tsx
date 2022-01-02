@@ -74,13 +74,6 @@ export default function Index<T>(props: IIndex<T>) {
 
             <GeneralList _list={entityList}>
                 <table className="table table-hover table-responsive table-striped w-75 mb-5">
-                    <thead>
-                        <tr>
-                            <th>{props.title}</th>
-                            <th>Chức năng</th>
-                        </tr>
-                    </thead>
-
                     {props.children(entityList!, buttons)}
                 </table>
             </GeneralList>

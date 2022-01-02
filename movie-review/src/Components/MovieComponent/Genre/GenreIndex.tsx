@@ -12,6 +12,12 @@ export const GenreIndex = () => {
             >
                 {(genres, buttons) => (
                     <>
+                        <thead>
+                            <tr>
+                                <th>Thể loại</th>
+                                <th>Chức năng</th>
+                            </tr>
+                        </thead>
                         <tbody>
                             {
                                 genres?.map((e, i) =>

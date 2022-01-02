@@ -23,7 +23,7 @@ export const ActorCreate = () => {
                 data: formData,
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
-            history.push('dien-vien');
+            history.push('/dien-vien');
 
         } catch (error: any) {
             if (error && error.response) {

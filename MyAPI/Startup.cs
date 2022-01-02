@@ -33,6 +33,8 @@ namespace MyAPI
         {
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
+            services.AddScoped<IFileStorageService, AzureStorageService>();
+
             services.AddControllers(opt =>
             {
                 opt.Filters.Add(typeof(ParseBadRequest));

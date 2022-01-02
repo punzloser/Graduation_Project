@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MyAPI.Constants;
 using MyAPI.DTOs;
 using MyAPI.Entities;
+using MyAPI.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +19,13 @@ namespace MyAPI.Controllers
     {
         private readonly MyDbContext _db;
         private readonly IMapper _mapper;
+        private readonly IFileStorageService _fileStorageService;
 
-        public ActorController(MyDbContext db, IMapper mapper)
+        public ActorController(MyDbContext db, IMapper mapper, IFileStorageService fileStorageService)
         {
             _db = db;
             _mapper = mapper;
+            _fileStorageService = fileStorageService;
         }
 
         [HttpGet]
@@ -46,12 +50,16 @@ namespace MyAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromForm] ActorCreationDTO actorCreation)
         {
-            //var result = _mapper.Map<Actor>(actorCreation);
+            var result = _mapper.Map<Actor>(actorCreation);
 
-            //_db.Add(result);
-            //await _db.SaveChangesAsync();
-            //return Ok();
-            throw new NotImplementedException();
+            if (actorCreation.Picture != null)
+            {
+                result.Picture =
+                    await _fileStorageService.SaveFile(SystemConstants.ContainerName.actors, actorCreation.Picture);
+            }
+            _db.Add(result);
+            await _db.SaveChangesAsync();
+            return Ok();
         }
 
         [HttpPut("{Id:int}")]

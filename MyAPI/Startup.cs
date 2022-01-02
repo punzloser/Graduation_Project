@@ -33,7 +33,7 @@ namespace MyAPI
         {
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
-            services.AddScoped<IFileStorageService, LocalStorageService>();
+            services.AddScoped<IFileStorageService, AzureStorageService>();
 
             services.AddHttpContextAccessor();
 

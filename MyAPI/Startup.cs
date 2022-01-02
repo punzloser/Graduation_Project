@@ -33,7 +33,9 @@ namespace MyAPI
         {
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
-            services.AddScoped<IFileStorageService, AzureStorageService>();
+            services.AddScoped<IFileStorageService, LocalStorageService>();
+
+            services.AddHttpContextAccessor();
 
             services.AddControllers(opt =>
             {
@@ -74,6 +76,8 @@ namespace MyAPI
             }
 
             app.UseHttpsRedirection();
+
+            app.UseStaticFiles();
 
             app.UseRouting();
 

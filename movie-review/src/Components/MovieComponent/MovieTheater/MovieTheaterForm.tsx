@@ -2,14 +2,14 @@ import { Form, Formik, FormikHelpers } from "formik";
 import { Link } from "react-router-dom";
 import { Btn } from "../../Utilities/Btn";
 import { TextField } from "../TextField";
-import { IMovieTheater } from "./IMovieTheater";
+import { movieTheaterCreationDTO } from "./IMovieTheater";
 import * as Yup from 'yup';
 import { MapField } from "../MapField";
 import ICoordinate from "../../Utilities/ICoordinate";
 
 interface IMovieTheaterForm {
-    model: IMovieTheater,
-    onSubmit(values: IMovieTheater, action: FormikHelpers<IMovieTheater>): void
+    model: movieTheaterCreationDTO,
+    onSubmit(values: movieTheaterCreationDTO, action: FormikHelpers<movieTheaterCreationDTO>): void
 }
 export const MovieTheaterForm = (props: IMovieTheaterForm) => {
     const changeCoordinate = (): ICoordinate[] | undefined => {

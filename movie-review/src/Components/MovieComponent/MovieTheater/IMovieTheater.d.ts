@@ -1,4 +1,4 @@
-export interface IMovieTheater {
+export interface movieTheaterCreationDTO {
     name: string,
     latitude?, longitude?: number
 }

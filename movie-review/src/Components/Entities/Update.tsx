@@ -4,7 +4,6 @@ import axios, { AxiosResponse } from "axios";
 import { DisplayErrors } from "../Utilities/DisplayErrors";
 import { Loading } from "../Utilities/Loading";
 import { ReactElement } from "react-markdown/lib/react-markdown";
-import { actorUrl } from "../../endpoints";
 
 interface IUpdate<TCreation, TRead> {
     urlBase: string,

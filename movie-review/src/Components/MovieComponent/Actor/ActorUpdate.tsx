@@ -1,12 +1,10 @@
 import { ActorForm } from "./ActorForm";
-import { useParams } from "react-router-dom";
 import Update from "../../Entities/Update";
 import { actorCreationDTO, actorDTO } from "./IActor";
 import { actorUrl } from "../../../endpoints";
 import { ToFormData } from "../../Utilities/FormData";
 
 export const ActorUpdate = () => {
-    const id = useParams();
 
     const transform = (actor: actorDTO): actorCreationDTO => {
         return {

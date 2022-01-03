@@ -12,6 +12,7 @@ export const DateField = (props: IDateField) => {
             <label htmlFor={props.field}>{props.displayName}</label>
             <input className="form-control" type="date"
                 name={props.field}
+                defaultValue={values[props.field]?.toLocaleDateString('en-CA')}
                 id={props.field}
                 onChange={e => {
                     const date = new Date(e.currentTarget.value);

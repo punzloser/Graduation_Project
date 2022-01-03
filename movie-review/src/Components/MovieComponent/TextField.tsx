@@ -6,7 +6,7 @@ interface ITextField {
 }
 export const TextField = (props: ITextField) => {
     return (
-        <div className="form-group">
+        <div className="form-group w-50">
             <label htmlFor={props.field}>{props.displayName}</label>
             <Field className="form-control" name={props.field} id={props.field} />
             <ErrorMessage name={props.field}>

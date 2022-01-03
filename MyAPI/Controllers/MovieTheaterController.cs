@@ -25,15 +25,15 @@ namespace MyAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<MovieTheater>>> Get()
+        public async Task<ActionResult<List<MovieTheaterDTO>>> Get()
         {
             var result = await _db.MovieTheaters.ToListAsync();
 
             return Ok(_mapper.Map<List<MovieTheaterDTO>>(result));
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<MovieTheater>>> GetById(int id)
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<List<MovieTheaterDTO>>> GetById(int id)
         {
             var result = await _db.MovieTheaters.FindAsync(id);
 

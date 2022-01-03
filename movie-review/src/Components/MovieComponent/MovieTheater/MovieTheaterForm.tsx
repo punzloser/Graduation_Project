@@ -38,7 +38,7 @@ export const MovieTheaterForm = (props: IMovieTheaterForm) => {
                     />
                     <div className="mb-5">
                         <Btn type="submit" disabled={formProps.isSubmitting}>Lưu lại</Btn>
-                        <Link className="btn btn-md btn-warning ms-2" to="/phim">Hủy</Link>
+                        <Link className="btn btn-md btn-warning ms-2" to="/rap">Hủy</Link>
                     </div>
                 </Form>
             )}

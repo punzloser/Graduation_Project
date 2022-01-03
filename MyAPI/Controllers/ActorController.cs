@@ -40,10 +40,10 @@ namespace MyAPI.Controllers
             return Ok(_mapper.Map<List<ActorDTO>>(result));
         }
 
-        [HttpGet("{Id:int}")]
-        public async Task<ActionResult<ActorDTO>> GetById(int Id)
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<ActorDTO>> GetById(int id)
         {
-            var result = await _db.Actors.FindAsync(Id);
+            var result = await _db.Actors.FindAsync(id);
             if (result != null)
                 return Ok(_mapper.Map<ActorDTO>(result));
             return NotFound();
@@ -65,10 +65,10 @@ namespace MyAPI.Controllers
             return Ok();
         }
 
-        [HttpPut("{Id:int}")]
-        public async Task<ActionResult> Put(int Id, [FromForm] ActorCreationDTO actorCreation)
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult> Put(int id, [FromForm] ActorCreationDTO actorCreation)
         {
-            var result = await _db.Actors.FindAsync(Id);
+            var result = await _db.Actors.FindAsync(id);
             if (result != null)
             {
                 if (actorCreation.Picture != null)
@@ -88,9 +88,9 @@ namespace MyAPI.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult> Del(int Id)
+        public async Task<ActionResult> Del(int id)
         {
-            var del = await _db.Actors.FindAsync(Id);
+            var del = await _db.Actors.FindAsync(id);
             if (del != null)
             {
                 if (del.Picture != null)

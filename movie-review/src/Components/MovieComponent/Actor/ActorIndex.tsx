@@ -16,6 +16,7 @@ export const ActorIndex = () => {
                         <thead>
                             <tr>
                                 <th></th>
+                                <th></th>
                                 <th>Diễn viên</th>
                                 <th>Ngày sinh</th>
                                 <th>Chức năng</th>
@@ -24,6 +25,7 @@ export const ActorIndex = () => {
                         <tbody className="align-text-bottom">
                             {actors.map((e, i) => (
                                 <tr key={i}>
+                                    <td>{i + 1}</td>
                                     <td>
                                         <img
                                             style={{ width: '6vw', borderRadius: '10px'}}

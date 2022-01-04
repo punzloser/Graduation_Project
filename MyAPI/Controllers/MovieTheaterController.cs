@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MyAPI.DTOs;
 using MyAPI.Entities;
+using MyAPI.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,9 +26,14 @@ namespace MyAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<MovieTheaterDTO>>> Get()
+        public async Task<ActionResult<List<MovieTheaterDTO>>> Get([FromQuery] PaginationDTO paginationDTO)
         {
-            var result = await _db.MovieTheaters.ToListAsync();
+            var queryable = _db.MovieTheaters.AsQueryable();
+            await HttpContext.InsertParametesPaginationInHeader(queryable);
+
+            var result = await queryable.OrderBy(a => a.Name)
+                .Paginate(paginationDTO)
+                .ToListAsync();
 
             return Ok(_mapper.Map<List<MovieTheaterDTO>>(result));
         }

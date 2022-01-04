@@ -1,16 +1,24 @@
+import { movieTheaterUrl } from "../../../endpoints";
+import Update from "../../Entities/Update";
+import { movieTheaterCreationDTO, movieTheaterDTO } from "./IMovieTheater";
 import { MovieTheaterForm } from "./MovieTheaterForm";
 
 export const MovieTheaterUpdate = () => {
     return (
-        <div className="container-fluid">
-            <h3 className="text-muted">Sửa đổi</h3>
-            <MovieTheaterForm
-                model={{ name: 'Test', latitude: 10.906450958330087, longitude: 106.85082979165058 }}
-                onSubmit={async e => {
-                    await new Promise(res => setTimeout(res, 1000));
-                    console.log(e);
-                }}
-            />
-        </div>
+        <>
+            <Update<movieTheaterCreationDTO, movieTheaterDTO>
+                urlBase={movieTheaterUrl}
+                urlIndex="/rap"
+            >
+                {(movieTheaters, update) => (
+                    <MovieTheaterForm
+                        model={movieTheaters}
+                        onSubmit={async e => {
+                            await update(e);
+                        }}
+                    />
+                )}
+            </Update>
+        </>
     );
 }

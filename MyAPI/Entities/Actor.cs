@@ -20,5 +20,7 @@ namespace MyAPI.Entities
         public string Biography { get; set; }
 
         public string Picture { get; set; }
+
+        public List<MovieActor> MovieActors { get; set; }
     }
 }

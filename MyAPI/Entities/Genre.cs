@@ -14,5 +14,7 @@ namespace MyAPI.Entities
         [StringLength(maximumLength: 30, ErrorMessage = "Tối đa 30 kí tự")]
         [GeneralAttribute]
         public string Name { get; set; }
+
+        public List<MovieGenre> MovieGenres { get; set; }
     }
 }

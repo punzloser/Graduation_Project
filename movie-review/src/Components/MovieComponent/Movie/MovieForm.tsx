@@ -13,6 +13,7 @@ import { genreDTO } from "../Genre/IGenre";
 import { movieTheaterDTO } from "../MovieTheater/IMovieTheater";
 import { TypeAheadActor } from "../TypeAheadActor";
 import { actorMovieDTO } from "../Actor/IActor";
+import { MarkdownField } from "../MarkdownField";
 
 interface IMovieForm {
     model: movieCreationDTO,
@@ -59,6 +60,7 @@ export const MovieForm = (props: IMovieForm) => {
                     <TextField field="trailer" displayName="Trailer" />
                     <DateField displayName="Ngày chiếu" field="realeaseDate" />
                     <ImageField displayName="Poster" field="poster" imageUrl={props.model.posterUrl} />
+
                     <div className="d-flex">
                         <MultiSelector
                             displayName="Chọn thể loại"
@@ -108,6 +110,7 @@ export const MovieForm = (props: IMovieForm) => {
                             </div>
                         )}
                     />
+                    <MarkdownField displayName="Tóm tắt phim" field="summary" />
                     <div className="mb-5">
                         <Btn type="submit" disabled={formProps.isSubmitting}>Lưu lại</Btn>
                         <Link className="btn btn-md btn-warning ms-2" to="/phim">Hủy</Link>

@@ -2,7 +2,7 @@ import { ActorForm } from "./ActorForm";
 import Update from "../../Entities/Update";
 import { actorCreationDTO, actorDTO } from "./IActor";
 import { actorUrl } from "../../../endpoints";
-import { ToFormData } from "../../Utilities/FormData";
+import { ActorToFormData } from "../../Utilities/FormData";
 
 export const ActorUpdate = () => {
 
@@ -19,7 +19,7 @@ export const ActorUpdate = () => {
             <Update<actorCreationDTO, actorDTO>
                 urlBase={actorUrl}
                 urlIndex="/dien-vien"
-                transformToFormData={ToFormData}
+                transformToFormData={ActorToFormData}
                 transform={transform}
             >
                 {(actor, update) => (

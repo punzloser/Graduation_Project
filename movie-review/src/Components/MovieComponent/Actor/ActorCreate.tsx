@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { actorUrl } from "../../../endpoints";
 import { DisplayErrors } from "../../Utilities/DisplayErrors";
-import { ToFormData } from "../../Utilities/FormData";
+import { ActorToFormData } from "../../Utilities/FormData";
 import { ActorForm } from "./ActorForm";
 import { defaultActor } from "./defaultActor";
 import { actorCreationDTO } from "./IActor";
@@ -15,7 +15,7 @@ export const ActorCreate = () => {
 
     const create = async (actor: actorCreationDTO) => {
         try {
-            const formData = ToFormData(actor);
+            const formData = ActorToFormData(actor);
 
             await axios({
                 method: 'post',

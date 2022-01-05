@@ -11,8 +11,8 @@ using NetTopologySuite.Geometries;
 namespace MyAPI.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20220104151921_movie & something")]
-    partial class moviesomething
+    [Migration("20220105174636_movie")]
+    partial class movie
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -106,6 +106,9 @@ namespace MyAPI.Migrations
                     b.Property<string>("Character")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
 
                     b.HasKey("ActorId", "MovieId");
 

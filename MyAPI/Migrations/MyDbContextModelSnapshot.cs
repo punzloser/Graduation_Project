@@ -105,6 +105,9 @@ namespace MyAPI.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("Order")
+                        .HasColumnType("int");
+
                     b.HasKey("ActorId", "MovieId");
 
                     b.HasIndex("MovieId");

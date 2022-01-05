@@ -36,7 +36,7 @@ export default function Index<T>(props: IIndex<T>) {
     useEffect(() => {
         indexLoading();
         // eslint-disable-next-line react-hooks/exhaustive-deps 
-    }, [page, entityList])
+    }, [page, recordsPerPage])
 
     const del = async (id: number) => {
         try {

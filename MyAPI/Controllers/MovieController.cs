@@ -42,7 +42,7 @@ namespace MyAPI.Controllers
 
             _db.Add(result);
             await _db.SaveChangesAsync();
-            return Ok();
+            return Ok(result.Id);
         }
 
         private void ArrangeActorOrder(Movie result)

@@ -1,5 +1,5 @@
 import { Form, Formik, FormikHelpers } from "formik";
-import IMovie from "./IMovie";
+import movieCreationDTO from "./IMovie";
 import * as Yup from 'yup';
 import { Btn } from "../../Utilities/Btn";
 import { Link } from "react-router-dom";
@@ -15,8 +15,8 @@ import { TypeAheadActor } from "../TypeAheadActor";
 import { actorMovieDTO } from "../Actor/IActor";
 
 interface IMovieForm {
-    model: IMovie,
-    onSubmit(values: IMovie, actions: FormikHelpers<IMovie>): void,
+    model: movieCreationDTO,
+    onSubmit(values: movieCreationDTO, actions: FormikHelpers<movieCreationDTO>): void,
     selectedGenres: genreDTO[],
     nonSelectedGenres: genreDTO[],
     selectedMovieTheaters: movieTheaterDTO[],

@@ -1,7 +1,7 @@
 import { actorMovieDTO } from "../Actor/IActor";
 import { genreDTO } from "../Genre/IGenre";
 import { movieTheaterDTO } from "../MovieTheater/IMovieTheater";
-import IMovie from "./IMovie";
+import movieCreationDTO from "./IMovie";
 import { MovieForm } from "./MovieForm";
 
 export const MovieUpdate = () => {
@@ -29,7 +29,7 @@ export const MovieUpdate = () => {
     );
 }
 
-const defaultMovie: IMovie = {
+const defaultMovie: movieCreationDTO = {
     title: 'Test',
     trailer: 'Test',
     inTheaters: true,

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MyAPI.DTOs;
 using MyAPI.Entities;
 using MyAPI.Helpers;
@@ -53,6 +54,22 @@ namespace MyAPI.Controllers
                     result.MovieActors[i].Order = i;
                 }
             }
+        }
+
+        [HttpGet("postget")]
+        public async Task<ActionResult<MoviePostGetDTO>> PostGet()
+        {
+            var genres = await _db.Genres.ToListAsync();
+            var movieTheaters = await _db.MovieTheaters.ToListAsync();
+
+            var movieTheaterDTOs = _mapper.Map<List<MovieTheaterDTO>>(movieTheaters);
+            var genreDTOs = _mapper.Map<List<GenreDTO>>(genres);
+
+            return new MoviePostGetDTO()
+            {
+                Genres = genreDTOs,
+                MovieTheaters = movieTheaterDTOs
+            };
         }
     }
 }

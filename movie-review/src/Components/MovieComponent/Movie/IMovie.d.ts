@@ -1,6 +1,8 @@
 import { actorMovieDTO } from "../Actor/actorCreationDTO";
+import { genreDTO } from "../Genre/IGenre";
+import { movieTheaterDTO } from "../MovieTheater/IMovieTheater";
 
-export default interface IMovie {
+export default interface movieCreationDTO {
     title: string,
     inTheaters: boolean,
     trailer: string,
@@ -10,4 +12,9 @@ export default interface IMovie {
     genreIds?: number[]
     movieTheaterIds?: number[],
     actors?: actorMovieDTO[]
+}
+
+export interface moviePostGetDTO {
+    genres: genreDTO[],
+    movieTheaters: movieTheaterDTO[]
 }

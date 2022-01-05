@@ -107,5 +107,32 @@ namespace MyAPI.Controllers
                 return NotFound();
             }
         }
+
+        [HttpGet("search")]
+        public async Task<ActionResult<List<ActorMovieDTO>>> SearchByName(string name)
+        {
+            var result = new List<ActorMovieDTO>();
+            if (string.IsNullOrWhiteSpace(name)) return result;
+
+            //return await _db.Actors
+            //    .Where(a => a.Name.Contains(name))
+            //    .OrderBy(a => a.Name)
+            //    .Select(a => new MovieActorDTO()
+            //    {
+            //        Id = a.Id,
+            //        Name = a.Name,
+            //        Picture = a.Picture
+            //    }).Take(5).ToListAsync();
+
+            return await (from a in _db.Actors
+                          where a.Name.Contains(name)
+                          orderby a.Name
+                          select new ActorMovieDTO()
+                          {
+                              Id = a.Id,
+                              Name = a.Name,
+                              Picture = a.Picture
+                          }).ToListAsync();
+        }
     }
 }

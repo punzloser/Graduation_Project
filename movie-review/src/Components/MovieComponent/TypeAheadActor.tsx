@@ -1,4 +1,7 @@
-import { Typeahead } from "react-bootstrap-typeahead";
+import axios, { AxiosResponse } from "axios";
+import { useState } from "react";
+import { AsyncTypeahead } from "react-bootstrap-typeahead";
+import { actorUrl } from "../../endpoints";
 import { actorMovieDTO } from "./Actor/IActor";
 
 interface ITypeAheadActor {
@@ -9,29 +12,40 @@ interface ITypeAheadActor {
     listUI(actor: actorMovieDTO): React.ReactElement
 }
 export const TypeAheadActor = (props: ITypeAheadActor) => {
-    const actors: actorMovieDTO[] = [
-        { id: 1, name: 'Nguyễn Thanh', character: '', picture: 'https://1.bigdata-vn.com/wp-content/uploads/2021/10/Ngam-Bo-Hinh-Anh-Anime-Dep-Va-Sieu-De-Thuong.jpg' },
-        { id: 2, name: 'Triệu Vy', character: '', picture: 'https://i1.sndcdn.com/artworks-000248908839-wlug27-t500x500.jpg' }
-    ]
+
+    const [loading, setLoading] = useState(false);
+    const [actors, setActors] = useState<actorMovieDTO[]>([]);
+
+    const handleSearch = (name: string) => {
+        setLoading(true);
+
+        axios.get(`${actorUrl}/search?name=${name}`)
+            .then((response: AxiosResponse<actorMovieDTO[]>) => {
+                setLoading(false);
+                setActors(response.data);
+            })
+    }
 
     const selected: actorMovieDTO[] = [];
     return (
         <>
             <label>{props.displayName}</label>
-            <Typeahead
+            <AsyncTypeahead
                 className="my-3 w-25"
                 id="typeahead"
                 onChange={actors => {
 
                     if (props.actors.findIndex(a => a.id === actors[0].id) === -1) {
+                        actors[0].character = '';
                         props.onAdd([...props.actors, actors[0]])
-                        console.log(actors);
                     }
 
                 }}
                 options={actors}
                 labelKey={actor => actor.name}
-                filterBy={['name']}
+                filterBy={() => true}
+                isLoading={loading}
+                onSearch={handleSearch}
                 placeholder="Nhập tên diễn viên ..."
                 minLength={1}
                 flip={true}

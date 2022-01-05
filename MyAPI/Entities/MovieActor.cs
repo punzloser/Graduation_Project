@@ -15,6 +15,8 @@ namespace MyAPI.Entities
         [StringLength(50, ErrorMessage = "Tối đa 50 kí tự")]
         public string Character { get; set; }
 
+        public int Order { get; set; }
+
         public Movie Movie { get; set; }
 
         public Actor Actor { get; set; }

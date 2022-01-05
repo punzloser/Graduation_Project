@@ -29,6 +29,52 @@ namespace MyAPI.Helpers
             CreateMap<MovieTheaterCreationDTO, MovieTheater>()
                 .ForMember(des => des.Location, opt => opt.MapFrom(src =>
                 geometryFactory.CreatePoint(new Coordinate(src.Longitude, src.Latitude))));
+
+            CreateMap<MovieCreationDTO, Movie>()
+                .ForMember(des => des.Poster, opt => opt.Ignore())
+                .ForMember(des => des.MovieGenres, opt => opt.MapFrom(MapMovieGenres))
+                .ForMember(des => des.MovieTheaterMovies, opt => opt.MapFrom(MapMovieTheaterMovies))
+                .ForMember(des => des.MovieActors, opt => opt.MapFrom(MapMovieActors));
+        }
+
+        private List<MovieActor> MapMovieActors(MovieCreationDTO movieCreationDTO, Movie movie)
+        {
+            var result = new List<MovieActor>();
+
+            if (movieCreationDTO.Actors == null) { return result; }
+
+            foreach (var actor in movieCreationDTO.Actors)
+            {
+                result.Add(new MovieActor() { ActorId = actor.Id, Character = actor.Character });
+            }
+
+            return result;
+        }
+
+        private List<MovieTheaterMovie> MapMovieTheaterMovies(MovieCreationDTO movieCreationDTO, Movie movie)
+        {
+            var result = new List<MovieTheaterMovie>();
+
+            if (movieCreationDTO.MovieTheaterIds == null) { return result; }
+
+            foreach (var id in movieCreationDTO.MovieTheaterIds)
+            {
+                result.Add(new MovieTheaterMovie() { MovieTheaterId = id });
+            }
+            return result;
+        }
+
+        private List<MovieGenre> MapMovieGenres(MovieCreationDTO movieCreationDTO, Movie movie)
+        {
+            var result = new List<MovieGenre>();
+
+            if (movieCreationDTO.GenreIds == null) { return result; }
+
+            foreach (var id in movieCreationDTO.GenreIds)
+            {
+                result.Add(new MovieGenre() { GenreId = id });
+            }
+            return result;
         }
     }
 }

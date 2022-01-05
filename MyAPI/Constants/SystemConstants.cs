@@ -12,6 +12,8 @@ namespace MyAPI.Constants
         public class ContainerName
         {
             public const string actors = "actors";
+
+            public const string movies = "movies";
         }
     }
 }

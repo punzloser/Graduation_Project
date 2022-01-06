@@ -35,6 +35,69 @@ namespace MyAPI.Helpers
                 .ForMember(des => des.MovieGenres, opt => opt.MapFrom(MapMovieGenres))
                 .ForMember(des => des.MovieTheaterMovies, opt => opt.MapFrom(MapMovieTheaterMovies))
                 .ForMember(des => des.MovieActors, opt => opt.MapFrom(MapMovieActors));
+
+            CreateMap<Movie, MovieDTO>()
+                .ForMember(des => des.Actors, opt => opt.MapFrom(MapActorMovieDTO))
+                .ForMember(des => des.Genres, opt => opt.MapFrom(MapGenreDTO))
+                .ForMember(des => des.MovieTheaters, opt => opt.MapFrom(MapMovieTheaterDTO));
+        }
+
+        private List<MovieTheaterDTO> MapMovieTheaterDTO(Movie movie, MovieDTO movieDTO)
+        {
+            var result = new List<MovieTheaterDTO>();
+
+            if (movie.MovieTheaterMovies != null)
+            {
+                foreach (var item in movie.MovieTheaterMovies)
+                {
+                    result.Add(new MovieTheaterDTO()
+                    {
+                        Id = item.MovieId,
+                        Name = item.MovieTheater.Name,
+                        Latitude = item.MovieTheater.Location.Coordinate.Y,
+                        Longitude = item.MovieTheater.Location.Coordinate.X
+                    });
+                }
+            }
+
+            return result;
+        }
+
+        private List<GenreDTO> MapGenreDTO(Movie movie, MovieDTO movieDTO)
+        {
+            var result = new List<GenreDTO>();
+
+            if (movie.MovieGenres != null)
+            {
+                foreach (var item in movie.MovieGenres)
+                {
+                    result.Add(new GenreDTO() { Id = item.GenreId, Name = item.Genre.Name });
+                }
+            }
+
+            return result;
+        }
+
+        private List<ActorMovieDTO> MapActorMovieDTO(Movie movie, MovieDTO movieDTO)
+        {
+            var result = new List<ActorMovieDTO>();
+
+            if (movie.MovieActors != null)
+            {
+                foreach (var item in movie.MovieActors)
+                {
+                    result.Add(new ActorMovieDTO()
+                    {
+                        Id = item.ActorId,
+                        Character = item.Character,
+                        Name = item.Actor.Name,
+                        Order = item.Order,
+                        Picture = item.Actor.Picture
+                    });
+                }
+            }
+
+            return result;
         }
 
         private List<MovieActor> MapMovieActors(MovieCreationDTO movieCreationDTO, Movie movie)

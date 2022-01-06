@@ -71,5 +71,20 @@ namespace MyAPI.Controllers
                 MovieTheaters = movieTheaterDTOs
             };
         }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<MovieDTO>> GetDetail(int id)
+        {
+            var movie = await _db.Movies
+                .Include(a => a.MovieActors).ThenInclude(a => a.Actor)
+                .Include(a => a.MovieGenres).ThenInclude(a => a.Genre)
+                .Include(a => a.MovieTheaterMovies).ThenInclude(a => a.MovieTheater)
+                .FirstOrDefaultAsync(a => a.Id == id);
+
+            var result = _mapper.Map<MovieDTO>(movie);
+            result.Actors.OrderBy(a => a.Order).ToList();
+
+            return result;
+        }
     }
 }

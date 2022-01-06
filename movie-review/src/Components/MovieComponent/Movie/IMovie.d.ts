@@ -1,4 +1,4 @@
-import { actorMovieDTO } from "../Actor/actorCreationDTO";
+import { actorMovieDTO } from "../Actor/IActor";
 import { genreDTO } from "../Genre/IGenre";
 import { movieTheaterDTO } from "../MovieTheater/IMovieTheater";
 

@@ -10,11 +10,11 @@ export const DateField = (props: IDateField) => {
     return (
         <div className="mb-3">
             <label htmlFor={props.field}>{props.displayName}</label>
-            <input className="form-control" type="date"
+            <input className="form-control w-25" type="date"
                 name={props.field}
                 defaultValue={values[props.field]?.toLocaleDateString('en-CA')}
                 id={props.field}
-                onChange={e => {
+                onMouseLeave={e => {
                     const date = new Date(e.currentTarget.value);
                     values[props.field] = date;
                     validateForm();

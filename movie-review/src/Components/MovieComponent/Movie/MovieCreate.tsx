@@ -30,6 +30,9 @@ export const MovieCreate = () => {
     const create = async (model: movieCreationDTO) => {
         try {
             const formData = MovieToFormData(model);
+            // formData.forEach((value, key) => {
+            //     console.log(key + " " + value)
+            // });
             const response = await axios({
                 method: 'post',
                 url: movieUrl,
@@ -71,4 +74,5 @@ const defaultMovie: movieCreationDTO = {
     title: '',
     trailer: '',
     inTheaters: false,
+    releaseDate: undefined
 }

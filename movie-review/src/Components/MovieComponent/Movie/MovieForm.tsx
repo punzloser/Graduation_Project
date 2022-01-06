@@ -58,7 +58,7 @@ export const MovieForm = (props: IMovieForm) => {
                     <TextField field="title" displayName="Tựa phim" />
                     <CheckBoxField field="inTheaters" displayName="Đang chiếu" />
                     <TextField field="trailer" displayName="Trailer" />
-                    <DateField displayName="Ngày chiếu" field="realeaseDate" />
+                    <DateField displayName="Ngày chiếu" field="releaseDate" />
                     <ImageField displayName="Poster" field="poster" imageUrl={props.model.posterUrl} />
 
                     <div className="d-flex">

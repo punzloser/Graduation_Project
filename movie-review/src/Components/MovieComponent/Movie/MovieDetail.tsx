@@ -100,13 +100,13 @@ export const MovieDetail = () => {
                         <div className="my-5">
 
                             <h3>Diễn viên lồng tiếng</h3>
-                            <div className="d-flex flex-column align-items-center">
+                            <div className="d-flex">
                                 {movieDetail.actors.map((e, i) =>
-                                    <React.Fragment key={i}>
+                                    <div className="d-flex flex-column" key={i}>
                                         <img className="rounded-pill w-25" src={e.picture} alt="pic" />
                                         <span className="font-monospace">{e.name}</span>
                                         <span className="font-monospace">{` .. ${e.character}`}</span>
-                                    </React.Fragment>
+                                    </div>
                                 )}
                             </div>
 

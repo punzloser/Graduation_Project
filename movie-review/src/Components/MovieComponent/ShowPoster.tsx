@@ -1,47 +1,31 @@
+import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
+import { movieUrl } from "../../endpoints";
 import { IListPoster } from "./IListPoster";
 import { ListPoster } from "./ListPoster";
 
 export const ShowPoster = () => {
 
     const [poster, setPoster] = useState<IListPoster>({});
-    useEffect(() => {
-        const timeId = setTimeout(() => {
-            setPoster({
-                inTheaters: [
-                    {
-                        id: 1,
-                        img: `https://zingtv-photo.zadn.vn/channel/e/7/a/4/e7a437da409c65dad156f356aef7e9ba.jpg`,
-                        title: 'Sự trỗi dậy của khiên anh hùng 1'
-                    },
-                    {
-                        id: 2,
-                        img: `https://api.toploigiai.vn/storage/uploads/tom-tat-truyen-5cm-s_1`,
-                        title: '5 Centimet trên giây'
-                    }
-                ],
-                upComingReleases: [
-                    {
-                        id: 1,
-                        img: `https://tuoitrechinhphuc.com/wp-content/uploads/2020/12/your-name-696x484-1.jpg`,
-                        title: 'Your name'
-                    },
-                    {
-                        id: 2,
-                        img: `https://zingtv-photo.zadn.vn/channel/e/7/a/4/e7a437da409c65dad156f356aef7e9ba.jpg`,
-                        title: 'Sự trỗi dậy của khiên anh hùng 2'
-                    }
-                ]
+
+    function loadData() {
+        axios.get(movieUrl)
+            .then((response: AxiosResponse<IListPoster>) => {
+                setPoster(response.data);
+                console.log(response.data.upcomingReleases)
             })
-        }, 500);
-        return () => clearTimeout(timeId);
-    });
+    }
+
+    useEffect(() => {
+        loadData();
+    }, []);
+
     return (
-        <div className="container">
+        <div className="container mb-5">
             <h1>Đang chiếu</h1>
             <ListPoster list={poster.inTheaters} />
             <h1>Sắp chiếu</h1>
-            <ListPoster list={poster.upComingReleases} />
+            <ListPoster list={poster.upcomingReleases} />
         </div>
     );
 }

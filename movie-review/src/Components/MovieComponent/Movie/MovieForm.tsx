@@ -110,8 +110,8 @@ export const MovieForm = (props: IMovieForm) => {
                             </div>
                         )}
                     />
-                    <MarkdownField displayName="Tóm tắt phim" field="summary" />
-                    <div className="mb-5">
+                    <MarkdownField displayName="Tóm tắt phim" field="summary" isDemo={false} />
+                    <div className="my-5">
                         <Btn type="submit" disabled={formProps.isSubmitting}>Lưu lại</Btn>
                         <Link className="btn btn-md btn-warning ms-2" to="/phim">Hủy</Link>
                     </div>

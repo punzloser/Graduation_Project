@@ -15,5 +15,7 @@ namespace MyAPI.Constants
 
             public const string movies = "movies";
         }
+
+        public const int Top = 5;
     }
 }

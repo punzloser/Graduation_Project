@@ -86,5 +86,44 @@ namespace MyAPI.Controllers
 
             return result;
         }
+
+        [HttpGet]
+        public async Task<ActionResult<LandingPageDTO>> Get()
+        {
+            var today = DateTime.Today;
+
+            //var upComingReleases = await (from m in _db.Movies
+            //                              where m.ReleaseDate > today
+            //                              orderby m.ReleaseDate
+            //                              select m)
+            //                              .Take(Top)
+            //                              .ToListAsync();
+
+            //var inTheaters = await (from m in _db.Movies
+            //                        where m.InTheaters == true
+            //                        orderby m.ReleaseDate
+            //                        select m)
+            //                        .ToListAsync();
+
+            var upComingReleases = await _db.Movies
+                .Where(a => a.ReleaseDate > today)
+                .OrderBy(a => a.ReleaseDate)
+                .Take(Top)
+                .ToListAsync();
+
+            var inTheaters = await _db.Movies
+                .Where(a => a.InTheaters)
+                .OrderBy(a => a.ReleaseDate)
+                .Take(Top)
+                .ToListAsync();
+
+            var result = new LandingPageDTO()
+            {
+                UpcomingReleases = _mapper.Map<List<MovieDTO>>(upComingReleases),
+                InTheaters = _mapper.Map<List<MovieDTO>>(inTheaters)
+            };
+
+            return result;
+        }
     }
 }

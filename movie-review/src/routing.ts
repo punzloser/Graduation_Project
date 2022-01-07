@@ -6,6 +6,7 @@ import { GenreCreate } from "./Components/MovieComponent/Genre/GenreCreate";
 import { GenreIndex } from "./Components/MovieComponent/Genre/GenreIndex";
 import { GenreUpdate } from "./Components/MovieComponent/Genre/GenreUpdate";
 import { MovieCreate } from "./Components/MovieComponent/Movie/MovieCreate";
+import { MovieDetail } from "./Components/MovieComponent/Movie/MovieDetail";
 import { MovieIndex } from "./Components/MovieComponent/Movie/MovieIndex";
 import { MovieUpdate } from "./Components/MovieComponent/Movie/MovieUpdate";
 import { MovieTheaterCreate } from "./Components/MovieComponent/MovieTheater/MovieTheaterCreate";
@@ -33,6 +34,7 @@ const routing = [
     { path: '/phim', component: MovieIndex, exact: true },
     { path: '/phim/them', component: MovieCreate },
     { path: '/phim/sua/:id(\\d+)', component: MovieUpdate },
+    { path: '/phim/:id(\\d+)', component: MovieDetail },
     
     { path: '*', component: RedirectAuto },
 ];

@@ -21,9 +21,9 @@ export default function Index<T>(props: IIndex<T>) {
     const [totalOfPages, setTotalOfPages] = useState(0);
     const [page, setPage] = useState(1);
 
-    const indexLoading = () => {
+    const indexLoading = async () => {
 
-        axios.get(props.urlBase, {
+        await axios.get(props.urlBase, {
             params: { page, recordsPerPage }
         })
             .then((response: AxiosResponse<T[]>) => {

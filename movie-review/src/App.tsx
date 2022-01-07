@@ -21,7 +21,7 @@ function App() {
             component={route.component} />
         )};
       </Switch>
-      <footer className='d-flex justify-content-end bg-dark text-white py-2 fixed-bottom rounded-top'>
+      <footer className='d-flex justify-content-end bg-dark text-white py-2 rounded-top fixed-bottom'>
         - - - Thanh Vy - Graduation project {new Date().getFullYear()}.
       </footer>
     </Router>

@@ -1,10 +1,13 @@
 import axios, { AxiosResponse } from "axios";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
 import { Link, useParams } from "react-router-dom";
 import { movieUrl } from "../../../endpoints";
 import { Loading } from "../../Utilities/Loading";
 import { movieDTO } from "./IMovie";
+import { Map } from './../../Utilities/Map';
+import ICoordinate from "../../Utilities/ICoordinate";
 
 export const MovieDetail = () => {
     const [movieDetail, setMovieDetail] = useState<movieDTO>();
@@ -31,6 +34,17 @@ export const MovieDetail = () => {
         }
 
         return `https://www.youtube.com/embed/${videoId}`;
+    }
+
+    const transformCoordinates = (): ICoordinate[] => {
+        if (movieDetail?.movieTheaters) {
+            const coordinates = movieDetail.movieTheaters.map(e => {
+                return { lat: e.latitude, lng: e.longitude, name: e.name } as ICoordinate
+            })
+            return coordinates;
+        }
+
+        return [];
     }
 
     return (
@@ -73,8 +87,42 @@ export const MovieDetail = () => {
                         </div> : null}
                     </div>
 
+                    {!movieDetail.summary ? null :
+                        <div className="my-5">
+                            <h3>Tóm tắt phim</h3>
+                            <div className="d-flex flex-wrap justify-content-center">
+                                <ReactMarkdown>{movieDetail.summary}</ReactMarkdown>
+                            </div>
+                        </div>
+                    }
+
+                    {movieDetail.actors && movieDetail.actors.length > 0 ?
+                        <div className="my-5">
+
+                            <h3>Diễn viên lồng tiếng</h3>
+                            <div className="d-flex flex-column align-items-center">
+                                {movieDetail.actors.map((e, i) =>
+                                    <React.Fragment key={i}>
+                                        <img className="rounded-pill w-25" src={e.picture} alt="pic" />
+                                        <span className="font-monospace">{e.name}</span>
+                                        <span className="font-monospace">{` .. ${e.character}`}</span>
+                                    </React.Fragment>
+                                )}
+                            </div>
+
+                        </div> : null
+                    }
+
+                    {movieDetail.movieTheaters && movieDetail.movieTheaters.length > 0 ?
+                        <div className="my-5">
+                            <h3>Rạp đang chiếu</h3>
+                            <div className="d-flex justify-content-center">
+                                <Map coordinates={transformCoordinates()} zoom={13} readOnly={true} />
+                            </div>
+                        </div> : null
+                    }
                 </>
             }
-        </div>
+        </div >
     );
 }

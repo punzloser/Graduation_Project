@@ -183,5 +183,23 @@ namespace MyAPI.Controllers
             }
 
         }
+
+        [HttpDelete]
+        public async Task<ActionResult> Del(int id)
+        {
+            var del = await _db.Movies.FindAsync(id);
+            if (del == null)
+                return NotFound();
+
+            _db.Remove(del);
+            await _db.SaveChangesAsync();
+
+            if (del.Poster != null)
+            {
+                await _fileStorageService.DelFile(ContainerName.movies, del.Poster);
+            }
+
+            return Ok();
+        }
     }
 }

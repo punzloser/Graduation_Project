@@ -12,7 +12,7 @@ export const ShowPoster = () => {
         axios.get(movieUrl)
             .then((response: AxiosResponse<IListPoster>) => {
                 setPoster(response.data);
-                console.log(response.data.upcomingReleases)
+                // console.log(response.data.upcomingReleases)
             })
     }
 

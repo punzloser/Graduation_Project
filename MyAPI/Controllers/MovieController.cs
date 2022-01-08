@@ -125,5 +125,63 @@ namespace MyAPI.Controllers
 
             return result;
         }
+
+        [HttpGet("putget/{id}")]
+        public async Task<ActionResult<MoviePutGetDTO>> PutGet(int id)
+        {
+            var movieActionResult = await GetDetail(id);
+            if (movieActionResult.Result is NotFoundResult) { return NotFound(); }
+            var movie = movieActionResult.Value;
+
+            var selectedGenreIds = movie.Genres.Select(a => a.Id).ToList();
+
+            var nonSelectedGenre =
+                await _db.Genres.Where(a => !selectedGenreIds.Contains(a.Id)).ToListAsync();
+
+            var selectedMovieTheaterIds = movie.MovieTheaters.Select(a => a.Id).ToList();
+
+            var nonSelectedMovieTheater =
+                await _db.MovieTheaters.Where(a => !selectedMovieTheaterIds.Contains(a.Id)).ToListAsync();
+
+            var result = new MoviePutGetDTO()
+            {
+                Movie = movie,
+                Actors = movie.Actors,
+                NonSelectedGenres = _mapper.Map<List<GenreDTO>>(nonSelectedGenre),
+                SelectedGenres = movie.Genres,
+                NonSelectedMovieTheaters = _mapper.Map<List<MovieTheaterDTO>>(nonSelectedMovieTheater),
+                SelectedMovieTheaters = movie.MovieTheaters
+            };
+
+            return result;
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> PutGet(int id, [FromForm] MovieCreationDTO movieCreationDTO)
+        {
+            var result = await _db.Movies
+                .Include(a => a.MovieActors)
+                .Include(a => a.MovieGenres)
+                .Include(a => a.MovieTheaterMovies).FirstOrDefaultAsync(a => a.Id == id);
+
+            if (result != null)
+            {
+                _mapper.Map(movieCreationDTO, result);
+
+                if (movieCreationDTO.Poster != null)
+                {
+                    result.Poster = await
+                        _fileStorageService.EditFile(ContainerName.movies, movieCreationDTO.Poster, result.Poster);
+                }
+                ArrangeActorOrder(result);
+                await _db.SaveChangesAsync();
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
+
+        }
     }
 }

@@ -52,7 +52,7 @@ namespace MyAPI.Helpers
                 {
                     result.Add(new MovieTheaterDTO()
                     {
-                        Id = item.MovieId,
+                        Id = item.MovieTheaterId,
                         Name = item.MovieTheater.Name,
                         Latitude = item.MovieTheater.Location.Coordinate.Y,
                         Longitude = item.MovieTheater.Location.Coordinate.X

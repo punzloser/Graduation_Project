@@ -201,5 +201,50 @@ namespace MyAPI.Controllers
 
             return Ok();
         }
+
+        [HttpGet("filter")]
+        public async Task<ActionResult<List<MovieDTO>>> Filter([FromQuery] FilterMovieDTO filterMovieDTO)
+        {
+            var queryable = _db.Movies.AsQueryable();
+            await HttpContext.InsertParametesPaginationInHeader(queryable);
+
+            if (!string.IsNullOrEmpty(filterMovieDTO.Title))
+            {
+                //queryable = from q in queryable
+                //            where q.Title.Contains(filterMovieDTO.Title)
+                //            select q;
+
+                queryable = queryable.Where(a => a.Title.Contains(filterMovieDTO.Title));
+            }
+
+            if (filterMovieDTO.UpcomingReleases)
+            {
+                var today = DateTime.Today;
+                queryable = queryable.Where(a => a.ReleaseDate > today);
+            }
+
+            if (filterMovieDTO.InTheaters)
+            {
+                queryable = queryable.Where(a => a.InTheaters == true);
+            }
+
+            if (filterMovieDTO.GenreId != 0)
+            {
+                //queryable = from q in queryable
+                //            where q.MovieGenres.Select(a => a.GenreId).Contains(filterMovieDTO.GenreId)
+                //            select q;
+
+                queryable = queryable
+                    .Where(a => a.MovieGenres.Select(b => b.GenreId)
+                    .Contains(filterMovieDTO.GenreId));
+            }
+
+            var result = await queryable
+                .Paginate(filterMovieDTO.PaginationDTO)
+                .OrderBy(a => a.Title)
+                .ToListAsync();
+
+            return Ok(_mapper.Map<List<MovieDTO>>(result));
+        }
     }
 }

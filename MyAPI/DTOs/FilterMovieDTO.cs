@@ -7,9 +7,9 @@ namespace MyAPI.DTOs
 {
     public class FilterMovieDTO
     {
-        public int Page { get; set; }
+        public int Page { get; set; } = 1;
 
-        public int RecordsPerPage { get; set; }
+        public int RecordsPerPage { get; set; } = 10;
 
         public PaginationDTO PaginationDTO
         {

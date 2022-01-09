@@ -38,6 +38,14 @@ namespace MyAPI.Controllers
 
         }
 
+        [HttpGet("all")]
+        public async Task<ActionResult<List<GenreDTO>>> Get()
+        {
+            var result = await _db.Genres.OrderBy(a => a.Name).ToListAsync();
+
+            return Ok(_mapper.Map<List<GenreDTO>>(result));
+        }
+
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult<GenreDTO>> GetById(int id)

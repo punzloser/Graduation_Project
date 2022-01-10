@@ -19,23 +19,23 @@ const routing = [
     { path: '/', component: ShowPoster, exact: true },
     { path: '/filter', component: Filter },
 
-    { path: '/the-loai', component: GenreIndex, exact: true },
-    { path: '/the-loai/them', component: GenreCreate },
-    { path: '/the-loai/sua/:id(\\d+)', component: GenreUpdate },
+    { path: '/the-loai', component: GenreIndex, exact: true, isAdmin: true },
+    { path: '/the-loai/them', component: GenreCreate, isAdmin: true },
+    { path: '/the-loai/sua/:id(\\d+)', component: GenreUpdate, isAdmin: true },
 
-    { path: '/dien-vien', component: ActorIndex, exact: true },
-    { path: '/dien-vien/them', component: ActorCreate },
-    { path: '/dien-vien/sua/:id(\\d+)', component: ActorUpdate },
+    { path: '/dien-vien', component: ActorIndex, exact: true, isAdmin: true },
+    { path: '/dien-vien/them', component: ActorCreate, isAdmin: true },
+    { path: '/dien-vien/sua/:id(\\d+)', component: ActorUpdate, isAdmin: true },
 
-    { path: '/rap', component: MovieTheaterIndex, exact: true },
-    { path: '/rap/them', component: MovieTheaterCreate },
-    { path: '/rap/sua/:id(\\d+)', component: MovieTheaterUpdate },
+    { path: '/rap', component: MovieTheaterIndex, exact: true, isAdmin: true },
+    { path: '/rap/them', component: MovieTheaterCreate, isAdmin: true },
+    { path: '/rap/sua/:id(\\d+)', component: MovieTheaterUpdate, isAdmin: true },
 
-    { path: '/phim', component: MovieIndex, exact: true },
-    { path: '/phim/them', component: MovieCreate },
-    { path: '/phim/sua/:id(\\d+)', component: MovieUpdate },
-    { path: '/phim/:id(\\d+)', component: MovieDetail },
-    
+    { path: '/phim', component: MovieIndex, exact: true, isAdmin: true },
+    { path: '/phim/them', component: MovieCreate, isAdmin: true },
+    { path: '/phim/sua/:id(\\d+)', component: MovieUpdate, isAdmin: true },
+    { path: '/phim/:id(\\d+)', component: MovieDetail, isAdmin: true },
+
     { path: '*', component: RedirectAuto },
 ];
 

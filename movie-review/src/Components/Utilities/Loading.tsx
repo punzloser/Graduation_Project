@@ -4,7 +4,8 @@ interface ILoading {
     check?: boolean | false;
 }
 export const Loading = (props: ILoading) => {
-    return props.check ? <img alt='error' src={err}></img> :
+
+    return props.check ? <img className='d-block ms-auto me-auto mt-5' alt='error' src={err}></img> :
         <>
             <img style={{ width: '250px', height: '140px' }} src={loader} alt="loading" />
         </>

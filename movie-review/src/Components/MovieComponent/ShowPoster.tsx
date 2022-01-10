@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
 import { movieUrl } from "../../endpoints";
+import { Authorized } from "../Security/Authorized";
 import { AlertContext } from "./AlertContext";
 import { IListPoster } from "./IListPoster";
 import { ListPoster } from "./ListPoster";
@@ -22,6 +23,8 @@ export const ShowPoster = () => {
 
     return (
         <AlertContext.Provider value={() => loadData()}>
+
+            <Authorized authorized={<>True</>} notAuthorized={<>False</>} />
             <div className="container mb-5">
                 <h1>Đang chiếu</h1>
                 <ListPoster list={poster.inTheaters} />

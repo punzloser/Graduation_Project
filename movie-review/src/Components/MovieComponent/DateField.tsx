@@ -14,7 +14,7 @@ export const DateField = (props: IDateField) => {
                 name={props.field}
                 defaultValue={values[props.field]?.toLocaleDateString('en-CA')}
                 id={props.field}
-                onMouseLeave={e => {
+                onChangeCapture={e => {
                     const date = new Date(e.currentTarget.value);
                     values[props.field] = date;
                     validateForm();

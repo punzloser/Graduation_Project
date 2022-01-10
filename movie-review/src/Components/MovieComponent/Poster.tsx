@@ -16,7 +16,10 @@ export const Poster = (props: IPoster) => {
             .then(() => alertDel())
     }
     return (
-        <div style={{ marginRight: '5px' }} className={css.div}>
+        <div
+            style={{ marginRight: '5px', marginBottom: '5px' }}
+            className={css.div}
+        >
 
             <Link to={`phim/${props.id}`}>
                 <img src={props.poster} alt={props.title} />

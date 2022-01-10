@@ -4,7 +4,7 @@ import './MarkdownField.css'
 
 interface IMarkdownField {
     displayName: string,
-    field: string,
+    field?: string,
     isDemo?: boolean
 }
 
@@ -25,7 +25,7 @@ export const MarkdownField = (props: IMarkdownField) => {
                 <div>
                     <label htmlFor={props.field}>{props.displayName} (Xem trước) </label>
                     <div className="demo">
-                        <ReactMarkdown>{values[props.field]}</ReactMarkdown>
+                        <ReactMarkdown>{props.field ? values[props.field] : values['']}</ReactMarkdown>
                     </div>
 
                 </div>

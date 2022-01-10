@@ -65,7 +65,10 @@ export default function Index<T>(props: IIndex<T>) {
     return (
         <div className="container-fluid">
             <h3 className="text-muted">{props.title}</h3>
-            <Link className="btn btn-lg btn-primary" to={props.urlCreate}>Khởi tạo</Link>
+            <div className="btn-group">
+                <Link className="btn btn-lg btn-primary" to={props.urlCreate}>Khởi tạo</Link>
+                <Link className="btn btn-lg btn-secondary" to="/">↲</Link>
+            </div>
             <Pagination currentPage={page} totalOfPages={totalOfPages} onChange={e => setPage(e)} />
             <RecordsFilter onChange={(e) => {
                 setPage(1);

@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { movieUrl } from "../../endpoints";
+import { Authorized } from "../Security/Authorized";
 import { Btn } from "../Utilities/Btn";
 import { CustomConfirm } from "../Utilities/CustomConfirm";
 import { AlertContext } from "./AlertContext";
@@ -26,9 +27,16 @@ export const Poster = (props: IPoster) => {
                 <p>{props.title}</p>
             </Link>
 
-            <Link className="btn btn-warning" to={`phim/sua/${props.id}`} children={`Sửa`} />
-            <Btn bgColor="btn btn-danger ms-2" children={`Xóa`}
-                onClick={() => CustomConfirm(() => delMovie())}
+            <Authorized
+                role="admin"
+                authorized={
+                    <>
+                        <Link className="btn btn-warning" to={`phim/sua/${props.id}`} children={`Sửa`} />
+                        <Btn bgColor="btn btn-danger ms-2" children={`Xóa`}
+                            onClick={() => CustomConfirm(() => delMovie())}
+                        />
+                    </>
+                }
             />
         </div>
     );

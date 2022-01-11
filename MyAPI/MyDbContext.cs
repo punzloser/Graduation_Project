@@ -1,15 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MyAPI.Entities;
 using MyAPI.Entities.Configurations;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MyAPI
 {
-    public class MyDbContext : DbContext
+    public class MyDbContext : IdentityDbContext
     {
         public MyDbContext([NotNullAttribute] DbContextOptions options) : base(options)
         {
@@ -22,6 +21,10 @@ namespace MyAPI
             modelBuilder.ApplyConfiguration(new MovieTheaterMovieConfiguration());
 
             modelBuilder.ApplyConfiguration(new MovieGenreConfiguration());
+
+            modelBuilder.Entity<IdentityUserLogin<string>>().HasKey(a => a.UserId);
+            modelBuilder.Entity<IdentityUserRole<string>>().HasKey(a => new { a.UserId, a.RoleId });
+            modelBuilder.Entity<IdentityUserToken<string>>().HasKey(a => a.UserId);
         }
 
         public DbSet<Genre> Genres { get; set; }

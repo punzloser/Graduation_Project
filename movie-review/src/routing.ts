@@ -34,7 +34,7 @@ const routing = [
     { path: '/phim', component: MovieIndex, exact: true, isAdmin: true },
     { path: '/phim/them', component: MovieCreate, isAdmin: true },
     { path: '/phim/sua/:id(\\d+)', component: MovieUpdate, isAdmin: true },
-    { path: '/phim/:id(\\d+)', component: MovieDetail, isAdmin: true },
+    { path: '/phim/:id(\\d+)', component: MovieDetail },
 
     { path: '*', component: RedirectAuto },
 ];

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using System;
@@ -24,6 +25,13 @@ namespace MyAPI.Filters
                 if (badRequestObjResult.Value is string)
                 {
                     response.Add(badRequestObjResult.Value.ToString());
+                }
+                else if (badRequestObjResult.Value is IEnumerable<IdentityError> errors)
+                {
+                    foreach (var err in errors)
+                    {
+                        response.Add(err.Description);
+                    }
                 }
                 else
                 {

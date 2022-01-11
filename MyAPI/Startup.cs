@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MyAPI.APIBehavior;
+using MyAPI.Constants;
 using MyAPI.Filters;
 using MyAPI.Helpers;
 using NetTopologySuite;
@@ -86,7 +87,7 @@ namespace MyAPI
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey =
-                        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["keyJwt"])),
+                        new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration[SystemConstants.Key])),
                         ClockSkew = TimeSpan.Zero
                     };
                 });

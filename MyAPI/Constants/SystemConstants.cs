@@ -8,6 +8,7 @@ namespace MyAPI.Constants
     public class SystemConstants
     {
         public const string AzureStorageConnection = "AzureStorage";
+        public const string Key = "keyJwt";
 
         public class ContainerName
         {

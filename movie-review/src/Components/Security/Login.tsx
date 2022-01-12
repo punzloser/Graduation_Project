@@ -1,22 +1,20 @@
 import axios from "axios";
 import { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { accountUrl } from "../../endpoints";
 import { DisplayErrors } from "../Utilities/DisplayErrors";
 import { AuthenForm } from "./AuthenForm";
 import { authenResponse, userCredsRequest } from "./IAuth";
 
-export const Register = () => {
+export const Login = () => {
 
     const [errs, setErrs] = useState<string[]>([]);
-    const history = useHistory();
 
-    const register = async (model: userCredsRequest) => {
-
+    const login = async (model: userCredsRequest) => {
         try {
             setErrs([]);
-            await axios.post<authenResponse>(`${accountUrl}/register`, model);
-            history.push('/');
+            const result = await axios.post<authenResponse>(`${accountUrl}/login`, model);
+            console.log(result);
+
         } catch (error: any) {
             if (error && error.response) {
                 setErrs(error.response.data);
@@ -25,11 +23,11 @@ export const Register = () => {
     }
     return (
         <div className="container-fluid">
-            <h3 className="text-muted">Đăng kí</h3>
+            <h3 className="text-muted">Đăng nhập</h3>
             <DisplayErrors errors={errs} />
             <AuthenForm model={{ email: '', pass: '' }}
                 onSubmit={async e => {
-                    await register(e);
+                    await login(e);
                 }}
             />
         </div>

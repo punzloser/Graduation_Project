@@ -13,7 +13,7 @@ ValidateCharacter();
 function App() {
 
   const [claims, setClaims] = useState<claim[]>([
-    { name: 'role', value: 'user' },
+    // { name: 'role', value: 'user' },
     // { name: 'role', value: 'admin' }
   ]);
 

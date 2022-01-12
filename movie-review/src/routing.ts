@@ -13,6 +13,7 @@ import { MovieTheaterCreate } from "./Components/MovieComponent/MovieTheater/Mov
 import { MovieTheaterIndex } from "./Components/MovieComponent/MovieTheater/MovieTheaterIndex";
 import { MovieTheaterUpdate } from "./Components/MovieComponent/MovieTheater/MovieTheaterUpdate";
 import { ShowPoster } from "./Components/MovieComponent/ShowPoster";
+import { Login } from "./Components/Security/Login";
 import { Register } from "./Components/Security/Register";
 import { RedirectAuto } from "./Components/Utilities/RedirectAuto";
 
@@ -37,7 +38,8 @@ const routing = [
     { path: '/phim/sua/:id(\\d+)', component: MovieUpdate, isAdmin: true },
     { path: '/phim/:id(\\d+)', component: MovieDetail },
 
-    { path: '/tai-khoan', component: Register },
+    { path: '/dang-ky', component: Register },
+    { path: '/dang-nhap', component: Login },
 
     { path: '*', component: RedirectAuto },
 ];

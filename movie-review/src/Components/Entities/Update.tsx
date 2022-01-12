@@ -37,7 +37,7 @@ export default function Update<TCreation, TRead>(props: IUpdate<TCreation, TRead
             history.push(props.urlIndex);
 
         } catch (err: any) {
-            if (err || err.response) {
+            if (err && err.response) {
                 setErrs(err.response.data);
             }
         }

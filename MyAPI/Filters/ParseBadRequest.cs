@@ -30,7 +30,32 @@ namespace MyAPI.Filters
                 {
                     foreach (var err in errors)
                     {
-                        response.Add(err.Description);
+                        if(err.Code.Contains("Short"))
+                        {
+                            response.Add("Mật khẩu có ít nhất 6 kí tự");
+                        }
+                        else if (err.Code.Contains("Alphanumeric"))
+                        {
+                            response.Add("Mật khẩu phải chứa ít nhất 1 kí tự đặc biệt");
+                        }
+                        else if (err.Code.Contains("Lower"))
+                        {
+                            response.Add("Mật khẩu có ít nhất chữ cái viết thường từ a -> z");
+                        }
+                        else if (err.Code.Contains("Upper"))
+                        {
+                            response.Add("Mật khẩu có ít nhất chữ cái viết hoa từ A -> Z");
+                        }
+                        else if (err.Code.Contains("Digit"))
+                        {
+                            response.Add("Mật khẩu có ít nhất 1 chữ số từ 0 -> 9");
+                        }
+                        else
+                        {
+                            response.Add(err.Description);
+                        }
+
+
                     }
                 }
                 else

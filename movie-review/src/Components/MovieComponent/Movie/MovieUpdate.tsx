@@ -45,7 +45,7 @@ export const MovieUpdate = () => {
 
         } catch (error: any) {
             if (error && error.response) {
-                setErrs(error);
+                setErrs(error.response.data);
             }
         }
     }

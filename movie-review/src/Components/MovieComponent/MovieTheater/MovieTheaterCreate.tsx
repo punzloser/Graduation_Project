@@ -17,7 +17,7 @@ export const MovieTheaterCreate = () => {
             history.push('/rap');
         } catch (error: any) {
             if (error && error.response) {
-                setErrs(errs);
+                setErrs(error.response.data);
             }
         }
     }

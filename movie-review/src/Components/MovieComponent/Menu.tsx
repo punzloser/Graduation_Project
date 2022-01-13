@@ -1,7 +1,17 @@
+import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { AuthenContext } from "../Security/AuthenContext";
 import { Authorized } from "../Security/Authorized";
+import { removeToken } from "../Security/handleJwt";
+import { Btn } from "../Utilities/Btn";
 
 export const Menu = () => {
+    const { update, claims } = useContext(AuthenContext);
+
+    const getMailUser = () => {
+        return claims.filter(a => a.name === 'email')[0]?.value;
+    }
+
     return (
         <>
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -35,6 +45,13 @@ export const Menu = () => {
                             <Authorized
                                 authorized={
                                     <>
+                                        <span className="nav-link">{getMailUser()} </span>
+                                        <Btn children="Thoát"
+                                            onClick={() => {
+                                                removeToken();
+                                                update([]);
+                                            }}
+                                        />
                                     </>
                                 }
                                 notAuthorized={

@@ -1,19 +1,27 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { useHistory } from "react-router-dom";
 import { accountUrl } from "../../endpoints";
 import { DisplayErrors } from "../Utilities/DisplayErrors";
+import { AuthenContext } from "./AuthenContext";
 import { AuthenForm } from "./AuthenForm";
+import { getClaim, setToken } from "./handleJwt";
 import { authenResponse, userCredsRequest } from "./IAuth";
 
 export const Login = () => {
 
     const [errs, setErrs] = useState<string[]>([]);
+    const history = useHistory();
+    const { update } = useContext(AuthenContext);
 
     const login = async (model: userCredsRequest) => {
         try {
+            
             setErrs([]);
             const result = await axios.post<authenResponse>(`${accountUrl}/login`, model);
-            console.log(result);
+            setToken(result.data);
+            update(getClaim());
+            history.push('/');
 
         } catch (error: any) {
             if (error && error.response) {

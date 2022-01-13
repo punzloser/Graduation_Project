@@ -3,23 +3,25 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Menu } from './Components/MovieComponent/Menu';
 import routes from './routing';
 import { ValidateCharacter } from './Components/Utilities/ValidateCharacter';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import claim from './Components/Security/IAuth';
 import { AuthenContext } from './Components/Security/AuthenContext';
 import { Loading } from './Components/Utilities/Loading';
+import { getClaim } from './Components/Security/handleJwt';
 
 ValidateCharacter();
 
 function App() {
 
-  const [claims, setClaims] = useState<claim[]>([
-    // { name: 'role', value: 'user' },
-    // { name: 'role', value: 'admin' }
-  ]);
+  const [claims, setClaims] = useState<claim[]>([]);
 
   const isAdmin = () => {
-    return claims.findIndex(a => a.name === 'role' && a.value === 'admin') > -1;
+    return claims.findIndex(claim => claim.name === 'role' && claim.value === 'admin') > -1;
   }
+
+  useEffect(() => {
+    setClaims(getClaim());
+  }, [])
 
   return (
 

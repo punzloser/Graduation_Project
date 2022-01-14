@@ -27,7 +27,7 @@ namespace MyAPI.Controllers
         }
 
         [HttpPost]
-        [Authorize(JwtBearerDefaults.AuthenticationScheme)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult> Post(RatingDTO ratingDTO)
         {
             var email = HttpContext.User.Claims.FirstOrDefault(a => a.Type == "email").Value;

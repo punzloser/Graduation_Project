@@ -18,7 +18,7 @@ namespace MyAPI.Controllers
 {
     [Route("api/phim")]
     [ApiController]
-    [Authorize(JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class MovieController : ControllerBase
     {
         private readonly MyDbContext _db;

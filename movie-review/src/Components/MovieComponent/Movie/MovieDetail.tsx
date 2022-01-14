@@ -8,6 +8,7 @@ import { Loading } from "../../Utilities/Loading";
 import { movieDTO } from "./IMovie";
 import { Map } from './../../Utilities/Map';
 import ICoordinate from "../../Utilities/ICoordinate";
+import { Rating } from "../../Utilities/Rating";
 
 export const MovieDetail = () => {
     const [movieDetail, setMovieDetail] = useState<movieDTO>();
@@ -54,6 +55,10 @@ export const MovieDetail = () => {
                     <h2>{movieDetail.title} -
                         <span className="text-muted">{moment(movieDetail?.releaseDate).format('YYYY')}</span>
                     </h2>
+
+                    <div className="d-flex justify-content-between my-3">
+                        <h5>Đánh giá <Rating selectedValue={0} onChange={() => { }} /></h5>
+                    </div>
 
                     Khởi chiếu : {moment(movieDetail.releaseDate).format('DD/MM/YYYY')}
                     {movieDetail?.genres?.map((e, i) =>

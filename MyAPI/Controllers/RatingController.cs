@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +27,7 @@ namespace MyAPI.Controllers
         }
 
         [HttpPost]
+        [Authorize(JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult> Post(RatingDTO ratingDTO)
         {
             var email = HttpContext.User.Claims.FirstOrDefault(a => a.Type == "email").Value;

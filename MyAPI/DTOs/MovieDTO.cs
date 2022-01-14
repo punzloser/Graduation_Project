@@ -24,5 +24,11 @@ namespace MyAPI.DTOs
         public List<ActorMovieDTO> Actors { get; set; }
         public List<MovieTheaterDTO> MovieTheaters { get; set; }
         public List<GenreDTO> Genres { get; set; }
+
+        public double StarRateAverage { get; set; }
+
+        public int RateUser { get; set; }
+
+        public int TotalOfVote { get; set; }
     }
 }

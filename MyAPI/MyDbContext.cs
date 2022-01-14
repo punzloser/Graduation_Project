@@ -40,5 +40,7 @@ namespace MyAPI
         public DbSet<MovieGenre> MovieGenres { get; set; }
 
         public DbSet<MovieTheaterMovie> MovieTheaterMovies { get; set; }
+
+        public DbSet<Rating> Ratings { get; set; }
     }
 }

@@ -16,6 +16,7 @@ using MyAPI.Helpers;
 using NetTopologySuite;
 using NetTopologySuite.Geometries;
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
 namespace MyAPI
@@ -25,6 +26,7 @@ namespace MyAPI
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
         }
 
         public IConfiguration Configuration { get; }

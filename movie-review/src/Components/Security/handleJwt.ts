@@ -9,6 +9,10 @@ export const setToken = (model: authenResponse) => {
     localStorage.setItem(expirationKey, model.expiration.toString());
 }
 
+export const getKeyToken = () => {
+    return localStorage.getItem(tokenKey);
+}
+
 export const removeToken = () => {
 
     localStorage.removeItem(tokenKey);

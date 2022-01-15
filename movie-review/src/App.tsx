@@ -8,8 +8,10 @@ import claim from './Components/Security/IAuth';
 import { AuthenContext } from './Components/Security/AuthenContext';
 import { Loading } from './Components/Utilities/Loading';
 import { getClaim } from './Components/Security/handleJwt';
+import { ConfigInterceptor } from './Components/Utilities/ConfigInterceptor';
 
 ValidateCharacter();
+ConfigInterceptor();
 
 function App() {
 

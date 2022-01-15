@@ -50,6 +50,10 @@ namespace MyAPI.Filters
                         {
                             response.Add("Mật khẩu có ít nhất 1 chữ số từ 0 -> 9");
                         }
+                        else if (err.Code.Contains("Duplicate"))
+                        {
+                            response.Add("Tài khoản có email này đã tồn tại !");
+                        }
                         else
                         {
                             response.Add(err.Description);

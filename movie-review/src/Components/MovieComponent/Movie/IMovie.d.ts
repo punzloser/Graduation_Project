@@ -12,7 +12,10 @@ export interface movieDTO {
     poster?: string,
     genres?: genreDTO[]
     movieTheaters?: movieTheaterDTO[],
-    actors?: actorMovieDTO[]
+    actors?: actorMovieDTO[],
+    starRateAverage: number,
+    rateUser: number,
+    totalOfVote: number
 }
 
 export default interface movieCreationDTO {

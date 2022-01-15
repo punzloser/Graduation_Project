@@ -24,7 +24,7 @@ export const MovieDetail = () => {
     useEffect(() => {
         render();
         // eslint-disable-next-line react-hooks/exhaustive-deps 
-    }, [id]);
+    }, [id, movieDetail]);
 
     const transferEmbeddedUrl = (link: string): string => {
         if (!link) { return '' }
@@ -70,7 +70,13 @@ export const MovieDetail = () => {
                     </h2>
 
                     <div className="d-flex justify-content-between my-3">
-                        <h5>Đánh giá <Rating selectedValue={0} onChange={handleRate} /></h5>
+                        <h5>Đánh giá <Rating selectedValue={movieDetail.rateUser} onChange={handleRate} /></h5>
+                        <p className="border badge text-wrap text-muted text-info fst-italic">
+                            Tổng lượt bình chọn : {movieDetail.totalOfVote}
+                        </p>
+                        <p className="border badge text-wrap text-muted text-info fst-italic">
+                            Trung bình sao : {movieDetail.starRateAverage}
+                        </p>
                     </div>
 
                     Khởi chiếu : {moment(movieDetail.releaseDate).format('DD/MM/YYYY')}

@@ -3,12 +3,13 @@ import moment from "moment";
 import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { Link, useParams } from "react-router-dom";
-import { movieUrl } from "../../../endpoints";
+import { movieUrl, ratingUrl } from "../../../endpoints";
 import { Loading } from "../../Utilities/Loading";
 import { movieDTO } from "./IMovie";
 import { Map } from './../../Utilities/Map';
 import ICoordinate from "../../Utilities/ICoordinate";
 import { Rating } from "../../Utilities/Rating";
+import Swal from "sweetalert2";
 
 export const MovieDetail = () => {
     const [movieDetail, setMovieDetail] = useState<movieDTO>();
@@ -48,6 +49,18 @@ export const MovieDetail = () => {
         return [];
     }
 
+    const handleRate = (rate: number) => {
+        axios.post(ratingUrl, { rateStar: rate, movieId: id })
+            .then(() => {
+                Swal.fire({
+                    title: 'Đánh giá thành công !',
+                    timer: 1500,
+                    showConfirmButton: false,
+                    icon: 'success'
+                })
+            })
+    }
+
     return (
         <div className="container mt-3">
             {!movieDetail ? <Loading /> :
@@ -57,7 +70,7 @@ export const MovieDetail = () => {
                     </h2>
 
                     <div className="d-flex justify-content-between my-3">
-                        <h5>Đánh giá <Rating selectedValue={0} onChange={() => { }} /></h5>
+                        <h5>Đánh giá <Rating selectedValue={0} onChange={handleRate} /></h5>
                     </div>
 
                     Khởi chiếu : {moment(movieDetail.releaseDate).format('DD/MM/YYYY')}

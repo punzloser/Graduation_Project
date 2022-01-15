@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using MyAPI.Constants;
@@ -22,13 +23,18 @@ namespace MyAPI.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IConfiguration _configuration;
+        private readonly MyDbContext _db;
 
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager,
-            IConfiguration configuration)
+        public AccountController(UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInManager,
+            IConfiguration configuration,
+            MyDbContext db
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
+            _db = db;
         }
 
         [HttpPost("register")]
@@ -44,7 +50,7 @@ namespace MyAPI.Controllers
 
             if (result.Succeeded)
             {
-                return BuildToken(userCreds);
+                return await BuildToken(userCreds);
             }
             else
             {
@@ -60,7 +66,7 @@ namespace MyAPI.Controllers
 
             if (result.Succeeded)
             {
-                return BuildToken(userCreds);
+                return await BuildToken(userCreds);
             }
             else
             {
@@ -68,12 +74,24 @@ namespace MyAPI.Controllers
             }
         }
 
-        private AuthenResponse BuildToken(UserCredsRequest userCreds)
+        private async Task<AuthenResponse> BuildToken(UserCredsRequest userCreds)
         {
-            var claims = new List<Claim>()
+            var findUserByMail = await _userManager.FindByEmailAsync(userCreds.Email);
+            var result = await _db.UserClaims
+                .FirstOrDefaultAsync(a => a.UserId == findUserByMail.Id);
+            var claims = new List<Claim>();
+
+            if (result != null)
             {
-                new Claim(type: "email", value: userCreds.Email)
-            };
+                var type = result.ClaimType;
+                var value = result.ClaimValue;
+                claims.Add(new Claim(type: "email", value: userCreds.Email));
+                claims.Add(new Claim(type: type, value: value));
+            }
+            else
+            {
+                claims.Add(new Claim(type: "email", value: userCreds.Email));
+            }
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration[SystemConstants.Key]));
             var creds = new SigningCredentials(key: key, algorithm: SecurityAlgorithms.HmacSha256);

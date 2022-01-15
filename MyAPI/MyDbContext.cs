@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using MyAPI.Entities;
-using MyAPI.Entities.Configurations;
-using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace MyAPI
@@ -16,15 +13,13 @@ namespace MyAPI
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new MovieActorConfiguration());
+            modelBuilder.Entity<MovieActor>().HasKey(a => new { a.ActorId, a.MovieId });
 
-            modelBuilder.ApplyConfiguration(new MovieTheaterMovieConfiguration());
+            modelBuilder.Entity<MovieTheaterMovie>().HasKey(a => new { a.MovieTheaterId, a.MovieId });
 
-            modelBuilder.ApplyConfiguration(new MovieGenreConfiguration());
+            modelBuilder.Entity<MovieGenre>().HasKey(a => new { a.MovieId, a.GenreId });
 
-            modelBuilder.Entity<IdentityUserLogin<string>>().HasKey(a => a.UserId);
-            modelBuilder.Entity<IdentityUserRole<string>>().HasKey(a => new { a.UserId, a.RoleId });
-            modelBuilder.Entity<IdentityUserToken<string>>().HasKey(a => a.UserId);
+            base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<Genre> Genres { get; set; }

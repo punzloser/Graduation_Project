@@ -12,3 +12,9 @@ export interface authenResponse {
     token: string,
     expiration: Date
 }
+
+export interface UserDTO {
+    id: string,
+    email: string,
+    isAdmin: boolean
+}

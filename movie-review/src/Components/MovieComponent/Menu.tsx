@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
 import { AuthenContext } from "../Security/AuthenContext";
 import { Authorized } from "../Security/Authorized";
 import { removeToken } from "../Security/handleJwt";
@@ -7,6 +7,7 @@ import { Btn } from "../Utilities/Btn";
 
 export const Menu = () => {
     const { update, claims } = useContext(AuthenContext);
+    const history = useHistory();
 
     const getMailUser = () => {
         return claims.filter(a => a.name === 'email')[0]?.value;
@@ -35,6 +36,9 @@ export const Menu = () => {
                                         <li className="navbar-item me-3">
                                             <NavLink to="/phim">Phim</NavLink>
                                         </li>
+                                        <li className="navbar-item me-3">
+                                            <NavLink to="/tai-khoan">Tài khoản</NavLink>
+                                        </li>
                                     </>
                                 } />
                             <li className="navbar-item">
@@ -50,6 +54,7 @@ export const Menu = () => {
                                             onClick={() => {
                                                 removeToken();
                                                 update([]);
+                                                history.push("/");
                                             }}
                                         />
                                     </>

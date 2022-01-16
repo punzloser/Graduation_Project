@@ -6,7 +6,7 @@ export const CustomConfirm = (
 ) => {
     Swal.fire({
         title: title,
-        confirmButtonText: 'Xóa',
+        confirmButtonText: 'Đồng ý',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',

@@ -162,7 +162,14 @@ namespace MyAPI.Controllers
                 user.IsAdmin = check;
             }
 
-            return Ok(result);
+            var configResult = result.SkipWhile(a => a.Email.Contains("admin"));
+
+            var checkMod = HttpContext.User.Claims.FirstOrDefault(a => a.Type == "email").Value;
+            if (checkMod.Contains("mod"))
+            {
+                configResult = configResult.SkipWhile(a => a.Email.Contains("mod"));
+            }
+            return Ok(configResult);
         }
 
         [HttpPost("setadmin")]
@@ -198,13 +205,15 @@ namespace MyAPI.Controllers
         }
 
         [HttpDelete("removeuser")]
-        [AllowAnonymous]
-        public async Task<ActionResult> DelUser(string userId)
+        public async Task<ActionResult> DelUser([FromQuery] string id)
         {
-            var rateOfUser = await _db.Ratings.Where(a => a.UserId == userId).ToListAsync();
-            _db.Ratings.RemoveRange(rateOfUser);
+            var rateOfUser = await _db.Ratings.Where(a => a.UserId == id).ToListAsync();
+            if (rateOfUser != null)
+            {
+                _db.Ratings.RemoveRange(rateOfUser);
+            }
 
-            var delUser = await _db.Users.FindAsync(userId);
+            var delUser = await _db.Users.FindAsync(id);
             _db.Users.Remove(delUser);
 
             await _db.SaveChangesAsync();

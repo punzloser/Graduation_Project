@@ -15,6 +15,7 @@ import { MovieTheaterUpdate } from "./Components/MovieComponent/MovieTheater/Mov
 import { ShowPoster } from "./Components/MovieComponent/ShowPoster";
 import { Login } from "./Components/Security/Login";
 import { Register } from "./Components/Security/Register";
+import { UserIndex } from "./Components/Security/UserIndex";
 import { RedirectAuto } from "./Components/Utilities/RedirectAuto";
 
 const routing = [
@@ -40,6 +41,7 @@ const routing = [
 
     { path: '/dang-ky', component: Register },
     { path: '/dang-nhap', component: Login },
+    { path: '/tai-khoan', component: UserIndex, isAdmin: true },
 
     { path: '*', component: RedirectAuto },
 ];

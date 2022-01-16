@@ -117,8 +117,32 @@ namespace MyAPI.Controllers
             };
         }
 
+        [HttpGet("getuserbyid")]
+        public async Task<ActionResult<UserDTO>> GetUserById([FromBody] string userId)
+        {
+            var user = await _db.Users.FindAsync(userId);
+            if (user != null)
+            {
+                bool isAdmin = false;
+
+                var check = await _db.UserClaims
+                    .Where(a => a.ClaimValue == "admin")
+                    .FirstOrDefaultAsync(a => a.UserId == userId);
+
+                if (check != null) { isAdmin = true; }
+
+                var result = _mapper.Map<UserDTO>(user);
+                result.IsAdmin = isAdmin;
+
+                return result;
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         [HttpGet("listuser")]
-        [AllowAnonymous]
         public async Task<ActionResult<List<UserDTO>>> GetListUser([FromQuery] PaginationDTO paginationDTO)
         {
             var queryable = _db.Users.AsQueryable();
@@ -129,11 +153,19 @@ namespace MyAPI.Controllers
                 .Paginate(paginationDTO)
                 .ToListAsync();
 
-            return Ok(_mapper.Map<List<UserDTO>>(listuser));
+            var result = _mapper.Map<List<UserDTO>>(listuser);
+
+            foreach (var user in result)
+            {
+                var GetUserByIdResult = GetUserById(user.Id).Result;
+                var check = GetUserByIdResult.Value.IsAdmin;
+                user.IsAdmin = check;
+            }
+
+            return Ok(result);
         }
 
         [HttpPost("setadmin")]
-        [AllowAnonymous]
         public async Task<ActionResult> SetAdmin([FromBody] string userId)
         {
             //var test = await _db.Users.FindAsync(userId);
@@ -150,7 +182,6 @@ namespace MyAPI.Controllers
         }
 
         [HttpPost("removeadmin")]
-        [AllowAnonymous]
         public async Task<ActionResult> RemoveAdmin([FromBody] string userId)
         {
             var thisUser = await _userManager.FindByIdAsync(userId);
@@ -162,6 +193,21 @@ namespace MyAPI.Controllers
             {
                 return NotFound();
             }
+
+            return Ok();
+        }
+
+        [HttpDelete("removeuser")]
+        [AllowAnonymous]
+        public async Task<ActionResult> DelUser(string userId)
+        {
+            var rateOfUser = await _db.Ratings.Where(a => a.UserId == userId).ToListAsync();
+            _db.Ratings.RemoveRange(rateOfUser);
+
+            var delUser = await _db.Users.FindAsync(userId);
+            _db.Users.Remove(delUser);
+
+            await _db.SaveChangesAsync();
 
             return Ok();
         }

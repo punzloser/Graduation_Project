@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios, { AxiosResponse } from 'axios';
 import { Link } from "react-router-dom";
 import { Btn } from "../Utilities/Btn";
@@ -10,7 +10,7 @@ import { ReactElement } from "react-markdown/lib/react-markdown";
 
 interface IIndex<T> {
     urlBase: string,
-    urlCreate: string,
+    urlCreate?: string,
     title: string,
     children: (entityList: T[], buttons: (urlUpdate: string, id: number) => ReactElement) => ReactElement
 }
@@ -20,6 +20,7 @@ export default function Index<T>(props: IIndex<T>) {
     const [recordsPerPage, setRecordsPerPage] = useState(5);
     const [totalOfPages, setTotalOfPages] = useState(0);
     const [page, setPage] = useState(1);
+    const isMountedRef = useRef(false);
 
     const indexLoading = async () => {
 
@@ -28,13 +29,18 @@ export default function Index<T>(props: IIndex<T>) {
         })
             .then((response: AxiosResponse<T[]>) => {
                 const totalOfRecords = parseInt(response.headers['totalofrecords'], 10);
-                setTotalOfPages(Math.ceil(totalOfRecords / recordsPerPage));
-                setEntityList(response.data);
+                if (isMountedRef.current) {
+                    setTotalOfPages(Math.ceil(totalOfRecords / recordsPerPage));
+                    setEntityList(response.data);
+                }
             })
+
     }
 
     useEffect(() => {
+        isMountedRef.current = true;
         indexLoading();
+        return () => { isMountedRef.current = false }
         // eslint-disable-next-line react-hooks/exhaustive-deps 
     }, [page, recordsPerPage, entityList])
 
@@ -65,10 +71,13 @@ export default function Index<T>(props: IIndex<T>) {
     return (
         <div className="container-fluid">
             <h3 className="text-muted">{props.title}</h3>
-            <div className="btn-group">
-                <Link className="btn btn-lg btn-primary" to={props.urlCreate}>Khởi tạo</Link>
-                <Link className="btn btn-lg btn-secondary" to="/">↲</Link>
-            </div>
+            {
+                !props.urlCreate ? null :
+                    <div className="btn-group">
+                        <Link className="btn btn-lg btn-primary" to={props.urlCreate}>Khởi tạo</Link>
+                        <Link className="btn btn-lg btn-secondary" to="/">↲</Link>
+                    </div>
+            }
             <Pagination currentPage={page} totalOfPages={totalOfPages} onChange={e => setPage(e)} />
             <RecordsFilter onChange={(e) => {
                 setPage(1);

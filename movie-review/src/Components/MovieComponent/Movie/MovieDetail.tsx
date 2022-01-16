@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import moment from "moment";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import { Link, useParams } from "react-router-dom";
 import { movieUrl, ratingUrl } from "../../../endpoints";
@@ -14,15 +14,20 @@ import Swal from "sweetalert2";
 export const MovieDetail = () => {
     const [movieDetail, setMovieDetail] = useState<movieDTO>();
     const { id }: any = useParams();
+    const isMountedRef = useRef(false);
 
     const render = async () => {
         await axios.get(`${movieUrl}/${id}`)
             .then((response: AxiosResponse<movieDTO>) => {
-                setMovieDetail(response.data);
+                if (isMountedRef.current) {
+                    setMovieDetail(response.data);
+                }
             })
     }
     useEffect(() => {
+        isMountedRef.current = true;
         render();
+        return () => { isMountedRef.current = false }
         // eslint-disable-next-line react-hooks/exhaustive-deps 
     }, [id, movieDetail]);
 

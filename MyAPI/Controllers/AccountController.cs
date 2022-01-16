@@ -1,11 +1,16 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using MyAPI.Constants;
+using MyAPI.DTOs;
 using MyAPI.DTOs.User;
+using MyAPI.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -18,26 +23,31 @@ namespace MyAPI.Controllers
 {
     [Route("api/tai-khoan")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "IsAdmin")]
     public class AccountController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IConfiguration _configuration;
         private readonly MyDbContext _db;
+        private readonly IMapper _mapper;
 
         public AccountController(UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             IConfiguration configuration,
-            MyDbContext db
+            MyDbContext db,
+            IMapper mapper
             )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
             _db = db;
+            _mapper = mapper;
         }
 
         [HttpPost("register")]
+        [AllowAnonymous]
         public async Task<ActionResult<AuthenResponse>> Register([FromBody] UserCredsRequest userCreds)
         {
             var user = new IdentityUser()
@@ -59,6 +69,7 @@ namespace MyAPI.Controllers
         }
 
         [HttpPost("login")]
+        [AllowAnonymous]
         public async Task<ActionResult<AuthenResponse>> Login([FromBody] UserCredsRequest userCreds)
         {
             var result =
@@ -104,6 +115,55 @@ namespace MyAPI.Controllers
                 Expiration = exp,
                 Token = new JwtSecurityTokenHandler().WriteToken(token)
             };
+        }
+
+        [HttpGet("listuser")]
+        [AllowAnonymous]
+        public async Task<ActionResult<List<UserDTO>>> GetListUser([FromQuery] PaginationDTO paginationDTO)
+        {
+            var queryable = _db.Users.AsQueryable();
+            await HttpContext.InsertParametesPaginationInHeader(queryable);
+
+            var listuser = await queryable
+                .OrderBy(a => a.Email)
+                .Paginate(paginationDTO)
+                .ToListAsync();
+
+            return Ok(_mapper.Map<List<UserDTO>>(listuser));
+        }
+
+        [HttpPost("setadmin")]
+        [AllowAnonymous]
+        public async Task<ActionResult> SetAdmin([FromBody] string userId)
+        {
+            //var test = await _db.Users.FindAsync(userId);
+            var thisUser = await _userManager.FindByIdAsync(userId);
+            if (thisUser != null)
+            {
+                await _userManager.AddClaimAsync(thisUser, new Claim(type: "role", value: "admin"));
+                return Ok();
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpPost("removeadmin")]
+        [AllowAnonymous]
+        public async Task<ActionResult> RemoveAdmin([FromBody] string userId)
+        {
+            var thisUser = await _userManager.FindByIdAsync(userId);
+            if (thisUser != null)
+            {
+                await _userManager.RemoveClaimAsync(thisUser, new Claim(type: "role", value: "admin"));
+            }
+            else
+            {
+                return NotFound();
+            }
+
+            return Ok();
         }
     }
 }

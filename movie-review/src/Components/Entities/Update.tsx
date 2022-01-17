@@ -48,6 +48,7 @@ export default function Update<TCreation, TRead>(props: IUpdate<TCreation, TRead
             .then((response: AxiosResponse<TRead>) => {
                 setEntity(props.transform(response.data));
             });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id]);
 
     return (

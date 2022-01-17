@@ -5,6 +5,7 @@ import { TextField } from "../MovieComponent/TextField";
 import { Btn } from "../Utilities/Btn";
 import { Link } from "react-router-dom";
 import './AuthenForm.css'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface IAuthenForm {
     model: userCredsRequest,
@@ -24,8 +25,12 @@ export const AuthenForm = (props: IAuthenForm) => {
             {formProps => (
                 <div className="wrapper">
                     <Form>
-                        <TextField displayName="Email" field="email" />
-                        <TextField displayName="Mật khẩu" field="pass" type="password" />
+                        <TextField displayName="Email" field="email"
+                            customIcon={<FontAwesomeIcon icon="mail-bulk" />}
+                        />
+                        <TextField displayName="Mật khẩu" field="pass" type="password"
+                            customIcon={<FontAwesomeIcon icon="key" />}
+                        />
                         <div className="mt-3">
                             <Btn type="submit" disabled={formProps.isSubmitting}>Xác nhận</Btn>
                             <Link className="btn btn-md btn-warning ms-2" to="/">Hủy</Link>

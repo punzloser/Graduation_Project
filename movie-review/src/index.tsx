@@ -5,10 +5,13 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faAddressBook, faBars, faFileVideo, faFilter, faHatCowboy, faKey, faMailBulk, faStar, faTachometerAlt, faTheaterMasks, faUser, faVoicemail } from '@fortawesome/free-solid-svg-icons';
 import { Snow } from './Components/Utilities/Snow';
 
-library.add(faStar);
+library.add(
+  faStar, faTachometerAlt, faAddressBook, faHatCowboy, faTheaterMasks,
+  faFileVideo, faUser, faFilter, faBars, faKey, faMailBulk
+);
 
 ReactDOM.render(
   <React.StrictMode>

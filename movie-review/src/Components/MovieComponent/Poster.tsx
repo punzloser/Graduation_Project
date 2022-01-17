@@ -24,7 +24,7 @@ export const Poster = (props: IPoster) => {
 
             <Link to={`phim/${props.id}`}>
                 <img src={props.poster} alt={props.title} />
-                <p>{props.title}</p>
+                <p style={{ width: '350px' }}>{props.title}</p>
             </Link>
 
             <Authorized

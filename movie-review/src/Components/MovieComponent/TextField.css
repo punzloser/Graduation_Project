@@ -1,0 +1,6 @@
+.form-field{
+     padding-left: 10px;
+     margin-bottom: 20px;
+     border-radius: 10px;
+     box-shadow: inset 8px 8px 8px #cbced1, inset -8px -8px 8px #fff
+}

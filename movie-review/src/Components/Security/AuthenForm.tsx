@@ -4,6 +4,7 @@ import * as yup from 'yup';
 import { TextField } from "../MovieComponent/TextField";
 import { Btn } from "../Utilities/Btn";
 import { Link } from "react-router-dom";
+import './AuthenForm.css'
 
 interface IAuthenForm {
     model: userCredsRequest,
@@ -21,7 +22,7 @@ export const AuthenForm = (props: IAuthenForm) => {
             })}
         >
             {formProps => (
-                <div className="d-flex justify-content-center">
+                <div className="wrapper">
                     <Form>
                         <TextField displayName="Email" field="email" />
                         <TextField displayName="Mật khẩu" field="pass" type="password" />

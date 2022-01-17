@@ -1,4 +1,5 @@
 import { ErrorMessage, Field } from "formik"
+import './TextField.css'
 
 interface ITextField {
     field: string,
@@ -10,8 +11,8 @@ export const TextField = (props: ITextField) => {
         <div className="form-group w-50">
             <label htmlFor={props.field}>{props.displayName}</label>
             <Field
-                type={props.type} className="form-control" name={props.field} id={props.field}
-                style={{ width: '100vh' }}
+                type={props.type} className="form-control form-field" name={props.field} id={props.field}
+                style={{ width: '50vh' }}
             />
             <ErrorMessage name={props.field}>
                 {msg => <div className="text-danger">{msg}</div>}

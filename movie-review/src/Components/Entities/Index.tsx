@@ -42,7 +42,7 @@ export default function Index<T>(props: IIndex<T>) {
         indexLoading();
         return () => { isMountedRef.current = false }
         // eslint-disable-next-line react-hooks/exhaustive-deps 
-    }, [page, recordsPerPage, entityList])
+    }, [page, recordsPerPage])
 
     const del = async (id: number) => {
         try {

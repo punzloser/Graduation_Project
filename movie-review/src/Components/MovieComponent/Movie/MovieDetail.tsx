@@ -10,6 +10,7 @@ import { Map } from './../../Utilities/Map';
 import ICoordinate from "../../Utilities/ICoordinate";
 import { Rating } from "../../Utilities/Rating";
 import Swal from "sweetalert2";
+import './MovieDetail.css';
 
 export const MovieDetail = () => {
     const [movieDetail, setMovieDetail] = useState<movieDTO>();
@@ -75,7 +76,11 @@ export const MovieDetail = () => {
                     </h2>
 
                     <div className="d-flex justify-content-between my-3">
-                        <h5>Đánh giá <Rating selectedValue={movieDetail.rateUser} onChange={handleRate} /></h5>
+                        <h5>Đánh giá
+                            <div>
+                                <Rating selectedValue={movieDetail.rateUser} onChange={handleRate} />
+                            </div>
+                        </h5>
                         <p className="border badge text-wrap text-muted text-info fst-italic">
                             Tổng lượt bình chọn : {movieDetail.totalOfVote}
                         </p>
@@ -88,23 +93,34 @@ export const MovieDetail = () => {
                     {movieDetail?.genres?.map((e, i) =>
                         <Link key={i}
                             to={`/filter?the-loai=${e.id}`}
-                            className="btn btn-primary rounded-pill ms-2"
+                            className="btn btn-primary rounded-pill ms-2 my-1"
                         >
                             {e.name}
                         </Link>
                     )}
 
-                    <div className="mt-3 d-flex flex-wrap">
-                        <span style={{ display: 'inline-block', marginRight: '1rem' }}>
-                            <img src={movieDetail.poster}
-                                className="rounded-start"
-                                style={{ width: '450px', height: '350px' }}
-                                alt="poster"
-                            />
-                        </span>
-                        {movieDetail.trailer ? <div>
+                    <section className="row">
+
+                        <div className="col py-3">
+                            <div className="clearfix">
+                                <img
+                                    src={movieDetail.poster}
+                                    className="me-2 col-md-4 mb-3 ms-md-3 rounded float-sm-start" alt="pic"
+                                    style={{ width: '350px', maxHeight: '400px' }}
+                                />
+
+                                <h3>Tóm tắt phim</h3>
+                                {!movieDetail.summary ? null :
+                                    <ReactMarkdown>{movieDetail.summary}</ReactMarkdown>
+                                }
+                            </div>
+                        </div>
+                    </section>
+
+                    {movieDetail.trailer ?
+                        <div className="video-wrapper">
                             <iframe
-                                className="rounded-end"
+                                className="rounded-end responsive-iframe"
                                 title="youtube-trailer"
                                 width="650px"
                                 height="350px"
@@ -114,16 +130,6 @@ export const MovieDetail = () => {
                                 allowFullScreen
                             ></iframe>
                         </div> : null}
-                    </div>
-
-                    {!movieDetail.summary ? null :
-                        <div className="my-5">
-                            <h3>Tóm tắt phim</h3>
-                            <div className="d-flex flex-wrap justify-content-center">
-                                <ReactMarkdown>{movieDetail.summary}</ReactMarkdown>
-                            </div>
-                        </div>
-                    }
 
                     {movieDetail.actors && movieDetail.actors.length > 0 ?
                         <div className="my-5">

@@ -17,7 +17,7 @@ export const TextField = (props: ITextField) => {
             </label>
             <Field
                 type={props.type} className="form-control form-field" name={props.field} id={props.field}
-                style={{ width: '50vh' }}
+                style={{width: '300px'}}
             />
             <ErrorMessage name={props.field}>
                 {msg => <div className="text-danger">{msg}</div>}

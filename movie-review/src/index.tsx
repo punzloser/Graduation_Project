@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import '../node_modules/bootstrap/dist/css/bootstrap.css';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faAddressBook, faBars, faFileVideo, faFilter, faHatCowboy, faKey, faMailBulk, faStar, faTachometerAlt, faTheaterMasks, faUser, faVoicemail } from '@fortawesome/free-solid-svg-icons';
+import { faAddressBook, faBars, faFileVideo, faFilter, faHatCowboy, faKey, faMailBulk, faStar, faTachometerAlt, faTheaterMasks, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Snow } from './Components/Utilities/Snow';
 
 library.add(

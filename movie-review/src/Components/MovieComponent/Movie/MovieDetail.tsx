@@ -30,7 +30,7 @@ export const MovieDetail = () => {
         render();
         return () => { isMountedRef.current = false }
         // eslint-disable-next-line react-hooks/exhaustive-deps 
-    }, [id, movieDetail]);
+    }, [id]);
 
     const transferEmbeddedUrl = (link: string): string => {
         if (!link) { return '' }
@@ -65,6 +65,7 @@ export const MovieDetail = () => {
                     icon: 'success'
                 })
             })
+            .then(() => render());
     }
 
     return (

@@ -4,13 +4,14 @@ import './MarkdownField.css'
 
 interface IMarkdownField {
     displayName: string,
-    field: string
+    field?: string,
+    isDemo?: boolean
 }
 
 export const MarkdownField = (props: IMarkdownField) => {
     const { values } = useFormikContext<any>();
     return (
-        <div className="d-flex">
+        <div className="d-flex my-5">
             <div>
                 <label htmlFor={props.field}>{props.displayName}</label>
                 <Field
@@ -20,14 +21,22 @@ export const MarkdownField = (props: IMarkdownField) => {
                     name={props.field}
                     as="textarea" />
             </div>
-            <div>
-                <label htmlFor={props.field}>{props.displayName} (Xem trước) </label>
-                <div className="demo">
-                    <ReactMarkdown>{values[props.field]}</ReactMarkdown>
+            {!props.isDemo ? null :
+                <div>
+                    <label htmlFor={props.field}>{props.displayName} (Xem trước) </label>
+                    <div className="demo">
+                        <ReactMarkdown>{props.field ? values[props.field] : values['']}</ReactMarkdown>
+                    </div>
+
                 </div>
-            </div>
+            }
+
 
         </div>
     );
+}
+
+MarkdownField.defaultProps = {
+    isDemo: true
 }
 

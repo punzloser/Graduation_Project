@@ -1,5 +1,5 @@
 import { Form, Formik, FormikHelpers } from "formik";
-import IMovie from "./IMovie";
+import movieCreationDTO from "./IMovie";
 import * as Yup from 'yup';
 import { Btn } from "../../Utilities/Btn";
 import { Link } from "react-router-dom";
@@ -12,16 +12,17 @@ import { useState } from "react";
 import { genreDTO } from "../Genre/IGenre";
 import { movieTheaterDTO } from "../MovieTheater/IMovieTheater";
 import { TypeAheadActor } from "../TypeAheadActor";
-import { actorDTO } from "../Actor/IActor";
+import { actorMovieDTO } from "../Actor/IActor";
+import { MarkdownField } from "../MarkdownField";
 
 interface IMovieForm {
-    model: IMovie,
-    onSubmit(values: IMovie, actions: FormikHelpers<IMovie>): void,
+    model: movieCreationDTO,
+    onSubmit(values: movieCreationDTO, actions: FormikHelpers<movieCreationDTO>): void,
     selectedGenres: genreDTO[],
     nonSelectedGenres: genreDTO[],
     selectedMovieTheaters: movieTheaterDTO[],
     nonSelectedMovieTheaters: movieTheaterDTO[],
-    selectedActors: actorDTO[]
+    selectedActors: actorMovieDTO[]
 }
 
 export const MovieForm = (props: IMovieForm) => {
@@ -57,8 +58,9 @@ export const MovieForm = (props: IMovieForm) => {
                     <TextField field="title" displayName="Tựa phim" />
                     <CheckBoxField field="inTheaters" displayName="Đang chiếu" />
                     <TextField field="trailer" displayName="Trailer" />
-                    <DateField displayName="Ngày chiếu" field="realeaseDate" />
+                    <DateField displayName="Ngày chiếu" field="releaseDate" />
                     <ImageField displayName="Poster" field="poster" imageUrl={props.model.posterUrl} />
+
                     <div className="d-flex">
                         <MultiSelector
                             displayName="Chọn thể loại"
@@ -83,14 +85,14 @@ export const MovieForm = (props: IMovieForm) => {
                     <TypeAheadActor
                         displayName="Diễn viên"
                         actors={selectedActors}
-                        onAdd={(actors: actorDTO[]) => {
+                        onAdd={(actors: actorMovieDTO[]) => {
                             setSelectedActors(actors);
                         }}
-                        onDel={(actor: actorDTO) => {
+                        onDel={(actor: actorMovieDTO) => {
                             const actors = selectedActors.filter(a => a !== actor);
                             setSelectedActors(actors);
                         }}
-                        listUI={(actor: actorDTO) => (
+                        listUI={(actor: actorMovieDTO) => (
                             <div>
                                 {actor.name}
                                 <input
@@ -108,7 +110,8 @@ export const MovieForm = (props: IMovieForm) => {
                             </div>
                         )}
                     />
-                    <div className="mb-5">
+                    <MarkdownField displayName="Tóm tắt phim" field="summary" isDemo={false} />
+                    <div className="my-5">
                         <Btn type="submit" disabled={formProps.isSubmitting}>Lưu lại</Btn>
                         <Link className="btn btn-md btn-warning ms-2" to="/phim">Hủy</Link>
                     </div>

@@ -1,13 +1,40 @@
-import { Link } from "react-router-dom";
+import { genreUrl } from "../../../endpoints";
+import Index from "../../Entities/Index";
+import { genreDTO } from './IGenre';
 
 export const GenreIndex = () => {
     return (
-        <div className="container-fluid">
-            <h3 className="text-muted">Thể loại</h3>
-            <div className="btn-group">
-                <Link className="btn btn-lg btn-primary" to="/the-loai/them">Khởi tạo</Link>
-                <Link className="btn btn-lg btn-warning" to="/the-loai/sua">Sửa đổi</Link>
-            </div>
-        </div>
+        <>
+            <Index<genreDTO>
+                urlBase={genreUrl}
+                urlCreate="the-loai/them"
+                title="Thể loại"
+            >
+                {(genres, buttons) => (
+                    <>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Thể loại</th>
+                                <th>Chức năng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                genres?.map((e, i) =>
+                                    <tr key={i}>
+                                        <td>{i + 1}</td>
+                                        <td>{e.name}</td>
+                                        <td>
+                                            {buttons(`the-loai/sua/${e.id}`, e.id)}
+                                        </td>
+                                    </tr>
+                                )
+                            }
+                        </tbody>
+                    </>
+                )}
+            </Index>
+        </>
     );
 }

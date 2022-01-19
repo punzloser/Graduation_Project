@@ -1,22 +1,37 @@
 import { ActorForm } from "./ActorForm";
-import { useParams } from "react-router-dom";
+import Update from "../../Entities/Update";
+import { actorCreationDTO, actorDTO } from "./IActor";
+import { actorUrl } from "../../../endpoints";
+import { ActorToFormData } from "../../Utilities/FormData";
 
 export const ActorUpdate = () => {
-    const id = useParams();
+
+    const transform = (actor: actorDTO): actorCreationDTO => {
+        return {
+            name: actor.name,
+            biography: actor.biography,
+            dob: new Date(actor.dob),
+            pictureUrl: actor.picture
+        }
+    }
     return (
-        <div className="container-fluid">
-            <h3 className="text-muted">Sửa đổi</h3>
-            <ActorForm
-                model={{
-                    name: 'Thanh kute',
-                    dateOfBirth: new Date('1995/01/25'),
-                    pictureUrl : 'https://i.pinimg.com/736x/ff/43/6b/ff436bc2ea8462b1cc02c17a296385bf.jpg'
-                }}
-                onSubmit={async e => {
-                    await new Promise(res => setTimeout(res, 1000));
-                    console.log(e);
-                    console.log(id);
-                }} />
-        </div>
+        <>
+            <Update<actorCreationDTO, actorDTO>
+                urlBase={actorUrl}
+                urlIndex="/dien-vien"
+                transformToFormData={ActorToFormData}
+                transform={transform}
+            >
+                {(actor, update) => (
+                    <ActorForm
+                        model={actor}
+                        onSubmit={async e => {
+                            await update(e)
+                        }}
+                    />
+                )}
+
+            </Update>
+        </>
     );
 }

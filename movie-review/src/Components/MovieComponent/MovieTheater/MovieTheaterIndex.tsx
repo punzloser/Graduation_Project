@@ -1,13 +1,37 @@
-import { Link } from "react-router-dom";
+import { movieTheaterUrl } from "../../../endpoints";
+import Index from "../../Entities/Index";
+import { movieTheaterDTO } from "./IMovieTheater";
 
 export const MovieTheaterIndex = () => {
     return (
-        <div className="container-fluid">
-            <h3 className="text-muted">Rạp</h3>
-            <div className="btn-group">
-                <Link className="btn btn-lg btn-primary" to="/rap/them">Khởi tạo</Link>
-                <Link className="btn btn-lg btn-warning" to="/rap/sua">Sửa đổi</Link>
-            </div>
-        </div>
+        <>
+            <Index<movieTheaterDTO>
+                urlBase={movieTheaterUrl}
+                urlCreate="rap/them"
+                title="Rạp phim"
+            >
+                {(movieTheaters, buttons) => (
+                    <>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Tên rạp</th>
+                                <th>Chức năng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {movieTheaters.map((e, i) => (
+                                <tr key={i}>
+                                    <td>{i + 1}</td>
+                                    <td>{e.name}</td>
+                                    <td>{buttons(`rap/sua/${e.id}`, e.id)}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </>
+                )}
+
+            </Index>
+        </>
     );
 }

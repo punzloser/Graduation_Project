@@ -2,31 +2,31 @@ import { Form, Formik, FormikHelpers } from "formik";
 import { Link } from "react-router-dom";
 import { Btn } from "../../Utilities/Btn";
 import { TextField } from "../TextField";
-import { IActor } from "./IActor";
+import { actorCreationDTO } from "./IActor";
 import * as Yup from "yup";
 import { DateField } from "../DateField";
 import { ImageField } from "../ImageField";
 import { MarkdownField } from "../MarkdownField";
 
-interface IActorForm {
-    model: IActor,
-    onSubmit(value: IActor, action: FormikHelpers<IActor>): void
+interface actorCreationDTOForm {
+    model: actorCreationDTO,
+    onSubmit(value: actorCreationDTO, action: FormikHelpers<actorCreationDTO>): void
 }
 
-export const ActorForm = (props: IActorForm) => {
+export const ActorForm = (props: actorCreationDTOForm) => {
     return (
         <Formik
             initialValues={props.model}
             onSubmit={props.onSubmit}
             validationSchema={Yup.object({
                 name: Yup.string().required('Nhập thể loại').firstLetterUppercase(),
-                dateOfBirth: Yup.date().nullable().required('Nhập ngày')
+                dob: Yup.date().nullable().required('Nhập ngày')
             })}
         >
             {formProps => (
                 <Form className="w-75">
                     <TextField displayName="Tên nhân vật" field="name" />
-                    <DateField displayName="Ngày sinh" field="dateOfBirth" />
+                    <DateField displayName="Ngày sinh" field="dob" />
                     <MarkdownField displayName="Tiểu sử" field="biography" />
                     <ImageField displayName="Hình ảnh" field="picture" imageUrl={props.model.pictureUrl} />
                     <div className="mb-5">

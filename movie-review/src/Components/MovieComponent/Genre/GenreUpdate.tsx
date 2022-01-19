@@ -1,19 +1,24 @@
-import { useParams } from "react-router-dom";
+import { genreUrl } from "../../../endpoints";
+import Update from "../../Entities/Update";
 import { GenreForm } from "./GenreForm";
+import { genreDTO, genreCreationDTO } from "./IGenre";
 
 export const GenreUpdate = () => {
-    const { id }: any = useParams();
+
     return (
-        <div className="container-fluid">
-            <h3 className="text-muted">Sửa đổi</h3>
-            <GenreForm
-                initValue={{ name: 'Update' }}
-                onSubmit={async e => {
-                    await new Promise(res => setTimeout(res, 1000));
-                    console.log(e);
-                    console.log(id);
-                }}
-            />
-        </div>
+        <>
+            <Update<genreCreationDTO, genreDTO>
+                urlBase={genreUrl}
+                urlIndex="/the-loai"
+            >
+                {(entity, update) =>
+                    <GenreForm
+                        initValue={entity}
+                        onSubmit={async (e) => {
+                            await update(e);
+                        }} />
+                }
+            </Update>
+        </>
     );
 }

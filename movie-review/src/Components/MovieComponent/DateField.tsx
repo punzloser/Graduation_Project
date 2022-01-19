@@ -6,16 +6,18 @@ interface IDateField {
 }
 
 export const DateField = (props: IDateField) => {
-    const { values } = useFormikContext<any>();
+    const { values, validateForm } = useFormikContext<any>();
     return (
         <div className="mb-3">
             <label htmlFor={props.field}>{props.displayName}</label>
-            <input className="form-control" type="date"
+            <input className="form-control" type="date" style={{width: '300px'}}
                 name={props.field}
+                defaultValue={values[props.field]?.toLocaleDateString('en-CA')}
                 id={props.field}
-                onChange={e => {
+                onChangeCapture={e => {
                     const date = new Date(e.currentTarget.value);
                     values[props.field] = date;
+                    validateForm();
                 }}
             />
             <ErrorMessage name={props.field}>

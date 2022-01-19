@@ -6,7 +6,7 @@ export const MovieIndex = () => {
             <h3 className="text-muted">Phim</h3>
             <div className="btn-group">
                 <Link className="btn btn-lg btn-primary" to="/phim/them">Khởi tạo</Link>
-                <Link className="btn btn-lg btn-warning" to="/phim/sua">Sửa đổi</Link>
+                <Link className="btn btn-lg btn-dark" to="/">↲</Link>
             </div>
         </div>
     );

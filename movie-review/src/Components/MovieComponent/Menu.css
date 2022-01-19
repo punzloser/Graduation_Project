@@ -1,0 +1,17 @@
+.middle{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  .text{
+    cursor: pointer;
+  }
+  .hidden{
+    max-width: 0;
+    opacity: 0;
+    transition: 0.3s ease-in;
+  }
+  .text:hover .hidden{
+    opacity: 1;
+    max-width: 1em;
+  }

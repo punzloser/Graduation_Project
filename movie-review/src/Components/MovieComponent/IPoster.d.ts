@@ -1,5 +1,9 @@
 export interface IPoster {
     id: number,
     title: string,
-    img: string
+    poster: string,
+    // genreId: number,
+    // upcomingReleases: boolean,
+    // inTheaters: boolean,
+    // page?: number,
 }

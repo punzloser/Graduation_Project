@@ -18,6 +18,8 @@
 }
 .multi-selector ul li:hover{
     background-color: blueviolet;
+    color: white;
+    font-weight: bold;
 }
 .multi-selector-btn{
     display: flex;

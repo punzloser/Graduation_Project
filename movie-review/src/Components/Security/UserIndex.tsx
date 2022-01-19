@@ -66,13 +66,19 @@ export const UserIndex = () => {
                                                     bgColor="btn btn-warning"
                                                     children="Hủy quyền"
                                                     onClick={() => {
-                                                        CustomConfirm(() => removeAsignUser(e.id), `Xóa quyền quản trị ${e.email} ?`)
+                                                        CustomConfirm(() => {
+                                                            removeAsignUser(e.id);
+                                                            setTimeout(() => window.location.reload(), 1000);
+                                                        }, `Xóa quyền quản trị ${e.email} ?`)
                                                     }}
                                                 /> :
                                                 <Btn
                                                     children="Gán quyền"
                                                     onClick={() => {
-                                                        CustomConfirm(() => addAsignUser(e.id), `Chọn ${e.email} làm quản trị ?`)
+                                                        CustomConfirm(() => {
+                                                            addAsignUser(e.id);
+                                                            setTimeout(() => window.location.reload(), 1000);
+                                                        }, `Chọn ${e.email} làm quản trị ?`)
                                                     }}
                                                 />
                                         }
@@ -81,7 +87,10 @@ export const UserIndex = () => {
                                         <Btn
                                             bgColor="btn btn-lg btn-danger"
                                             children="Xóa tài khoản"
-                                            onClick={() => CustomConfirm(() => delUser(e.id), `Đồng ý xóa tài khoản ${e.email} này ?`)}
+                                            onClick={() => CustomConfirm(() => {
+                                                delUser(e.id);
+                                                setTimeout(() => window.location.reload(), 1000);
+                                            }, `Đồng ý xóa tài khoản ${e.email} này ?`)}
                                         />
                                     </td>
                                 </tr>
